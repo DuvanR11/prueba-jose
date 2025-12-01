@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos - Julián Uscátegui</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Configuración Global */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
+            overflow-x: hidden;
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, .font-heading { font-family: 'Montserrat', sans-serif; }
+
+        /* Paleta */
+        :root {
+            --brand-blue: #1F2A44;
+            --brand-yellow: #FFC72C;
+            --brand-red: #CE1126;
+            --brand-gray: #F4F6F8;
+        }
+
+        .bg-brand-blue { background-color: var(--brand-blue); }
+        .text-brand-blue { color: var(--brand-blue); }
+        .bg-brand-yellow { background-color: var(--brand-yellow); }
+        .text-brand-yellow { color: var(--brand-yellow); }
+        .bg-brand-red { background-color: var(--brand-red); }
+        .text-brand-red { color: var(--brand-red); }
+
+        /* --- ESTILOS ESPECÍFICOS DEL CARRUSEL --- */
+        .carousel-container {
+            display: flex;
+            gap: 2rem; /* gap-8 equiv */
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 2rem; /* Espacio para la sombra */
+            padding-left: 4px; /* Pequeño padding para no cortar sombras */
+            padding-right: 4px;
+            
+            /* Ocultar Scrollbar pero mantener funcionalidad */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+            
+            /* Propiedades de Snap para sensación de carrusel */
+            scroll-snap-type: x mandatory;
+        }
+        .carousel-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .video-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+            flex-shrink: 0; /* Evita que se encojan */
+            scroll-snap-align: start; /* Alineación al hacer scroll */
+            
+            /* Anchos responsivos del carrusel */
+            width: 85%; /* En móvil muestra uno y un pedazo del siguiente */
+        }
+
+        @media (min-width: 768px) {
+            .video-card {
+                /* En desktop calcula para mostrar 3 (aprox 33% menos el gap) */
+                width: calc(33.333% - 1.35rem); 
+            }
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            z-index: 10; /* Asegura que la sombra se vea sobre otros */
+        }
+        
+        /* Botones Redes Flotantes */
+        .social-float {
+            position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 10px; z-index: 50;
+        }
+        .social-btn {
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.4rem; box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .social-btn:hover { transform: scale(1.1); }
+        .btn-whatsapp { background-color: #25D366; }
+        .btn-facebook { background-color: #1877F2; }
+        .btn-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .btn-x { background-color: #000; }
+        .btn-tiktok { background-color: #000; }
+        .fill-current { fill: currentColor; }
+        
+        /* Contador de Vistas */
+        .views-counter {
+            position: fixed; bottom: 20px; left: 20px; background: white;
+            padding: 8px 16px; border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex; align-items: center; gap: 10px; z-index: 50;
+            font-size: 0.9rem; color: #4b5563; border: 1px solid #e5e7eb;
+        }
+        .chart-bar { width: 4px; border-radius: 2px 2px 0 0; }
+        .bar-1 { height: 60%; background-color: var(--brand-blue); }
+        .bar-2 { height: 100%; background-color: var(--brand-yellow); }
+        .bar-3 { height: 80%; background-color: var(--brand-red); }
+    </style>
+</head>
+<body class="bg-white text-lg">
+
+    <!-- Contador de Vistas -->
+    <div class="views-counter">
+        <div class="flex items-end gap-[2px] h-4">
+            <div class="chart-bar bar-1"></div>
+            <div class="chart-bar bar-2"></div>
+            <div class="chart-bar bar-3"></div>
+        </div>
+        <span class="font-bold" id="page-views-count">6644 vistas</span>
+    </div>
+
+    <!-- Redes Flotantes -->
+    <div class="social-float hidden md:flex">
+        <a href="https://www.instagram.com/jjuscategui/" class="social-btn btn-instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com/jjUscategui" class="social-btn btn-x flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 512 512" class="fill-current"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
+        </a>
+        <a href="#" class="social-btn btn-facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://api.whatsapp.com/send/?phone=573118678830" class="social-btn btn-whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="" class="social-btn btn-tiktok"><i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <!-- 1. Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="h-2 w-full flex">
+            <div class="bg-brand-yellow w-1/2"></div>
+            <div class="bg-brand-blue w-1/4"></div>
+            <div class="bg-brand-red w-1/4"></div>
+        </div>
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+                <div class="flex items-center justify-between w-full lg:w-auto gap-8">
+                    <a href="#" class="flex items-center border-r-4 border-gray-300 pr-6">
+                        <img src="https://uscateguicol.com/wp-content/uploads/2024/06/cropped-uscategui_logo.png" alt="Logo Uscátegui" class="h-12">
+                    </a>
+                    <button id="mobile-menu-btn" class="lg:hidden text-brand-blue text-3xl focus:outline-none"><i class="fas fa-bars"></i></button>
+                </div>
+                <nav id="main-nav" class="hidden lg:flex flex-col lg:flex-row items-center gap-4 lg:gap-8 text-base font-bold text-gray-600 uppercase tracking-wide w-full lg:w-auto mt-4 lg:mt-0">
+                    <a href="home.html" class="hover:text-brand-blue transition">Inicio</a>
+                    <a href="videos.html" class="text-brand-blue border-b-4 border-brand-yellow pb-1">Videos</a>
+                    <a href="avances.html" class="hover:text-brand-blue transition">Avances</a>
+                    <a href="aliados.html" class="hover:text-brand-blue transition">Aliados</a>
+                    <a href="noticias.html" class="hover:text-brand-blue transition">Noticias</a>
+                    <a href="unete.html" class="px-6 py-3 bg-brand-blue text-white rounded hover:bg-opacity-90 transition shadow-lg transform hover:-translate-y-0.5 text-base w-full lg:w-auto text-center lg:text-left">Únete al equipo</a>
+                </nav>
+                <div class="hidden xl:block pl-6 border-l-4 border-gray-200">
+                    <a href="#" class="flex items-center">
+                        <img src="https://uscateguicol.com/wp-content/uploads/elementor/thumbs/IMG_1243-r97qb41sgpgd2vp0sn8jy55nhca1g44kflp0otnhwo.jpg" alt="Logo Julián Uscátegui Concejal" class="h-12">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Hero Multimedia -->
+    <section class="relative h-[400px] flex items-center justify-center text-center text-white">
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://uscateguicol.com/wp-content/uploads/2024/06/fondo_colombia.jpg');">
+            <!-- Overlay Oscuro Mejorado: bg-gray-900 con 90% opacidad -->
+            <div class="absolute inset-0 bg-gray-900/70 mix-blend-multiply"></div>
+        </div>
+        <div class="relative z-10 container mx-auto px-6 animate-fade-in-up">
+            <h1 class="text-4xl md:text-5xl font-black font-heading mb-4 uppercase drop-shadow-lg text-white">
+                Algunos de nuestros <br/>
+                <span class="text-brand-yellow drop-shadow-md">Contenidos Multimedia</span>
+            </h1>
+            <div class="w-24 h-1 bg-brand-red mx-auto mb-6 shadow-lg"></div>
+            <p class="text-xl font-medium text-gray-100 max-w-2xl mx-auto drop-shadow-md">
+                Explora nuestros documentales, intervenciones y espacios de diálogo directo con la ciudadanía.
+            </p>
+        </div>
+    </section>
+
+    <!-- 3. Sección Documentales -->
+    <section class="py-16 bg-white relative group/section">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between mb-10">
+                <h2 class="text-3xl md:text-4xl font-black font-heading text-brand-blue">Documentale hghgfs</h2>
+                <div class="flex gap-2">
+                    <button onclick="scrollCarousel('documentales-list', -1)" class="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:bg-brand-blue hover:text-white transition cursor-pointer shadow-md hover:shadow-lg"><i class="fas fa-chevron-left"></i></button>
+                    <button onclick="scrollCarousel('documentales-list', 1)" class="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:bg-brand-blue hover:text-white transition cursor-pointer shadow-md hover:shadow-lg"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Carrusel Container -->
+            <div id="documentales-list" class="carousel-container">
+                <!-- El contenido será inyectado por JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Sección Pregúntale a José Jaime -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-10">
+                <h2 class="text-3xl md:text-4xl font-black font-heading text-brand-blue text-center md:text-left">Pregúntale a José Jaime</h2>
+                <div class="flex gap-2 mt-4 md:mt-0">
+                    <button onclick="scrollCarousel('preguntas-list', -1)" class="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:bg-brand-blue hover:text-white transition cursor-pointer bg-white shadow-md hover:shadow-lg"><i class="fas fa-chevron-left"></i></button>
+                    <button onclick="scrollCarousel('preguntas-list', 1)" class="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:bg-brand-blue hover:text-white transition cursor-pointer bg-white shadow-md hover:shadow-lg"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            
+            <div id="preguntas-list" class="carousel-container">
+                 <!-- El contenido será inyectado por JS -->
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block border-2 border-brand-blue text-brand-blue px-8 py-3 font-bold rounded hover:bg-brand-blue hover:text-white transition uppercase tracking-wide">Ver todos los episodios</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Sección Intervención Plenaria -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between mb-10">
+                <h2 class="text-3xl md:text-4xl font-black font-heading text-brand-blue border-l-8 border-brand-yellow pl-4">Intervención Plenaria</h2>
+                <div class="flex gap-2">
+                    <button onclick="scrollCarousel('intervenciones-list', -1)" class="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:bg-brand-blue hover:text-white transition cursor-pointer shadow-md hover:shadow-lg"><i class="fas fa-chevron-left"></i></button>
+                    <button onclick="scrollCarousel('intervenciones-list', 1)" class="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:bg-brand-blue hover:text-white transition cursor-pointer shadow-md hover:shadow-lg"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            
+            <div id="intervenciones-list" class="carousel-container">
+                <!-- El contenido será inyectado por JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Heredado) -->
+    <footer class="bg-brand-blue text-white pt-24 pb-12 border-t-[12px] border-brand-yellow">
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-16 mb-16">
+            <div class="md:col-span-1 space-y-8">
+                <div class="bg-white p-6 rounded-lg inline-block shadow-lg">
+                    <a href="#" class="flex items-center border-r-4 border-gray-300 pr-6">
+                        <img src="https://uscateguicol.com/wp-content/uploads/2024/06/cropped-uscategui_logo.png" alt="Logo Uscátegui" class="h-12">
+                    </a>
+                </div>
+                <div class="bg-white p-6 rounded-lg inline-block shadow-lg">
+                     <a href="#" class="flex items-center">
+                        <img src="https://uscateguicol.com/wp-content/uploads/elementor/thumbs/IMG_1243-r97qb41sgpgd2vp0sn8jy55nhca1g44kflp0otnhwo.jpg" alt="Logo Julián Uscátegui Concejal" class="h-12">
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-xl mb-8 uppercase tracking-wider text-brand-yellow border-b border-blue-800 pb-2 inline-block">Navegación</h4>
+                <ul class="space-y-4 text-base text-gray-300">
+                    <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-brand-yellow"></i> Inicio</a></li>
+                    <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-brand-yellow"></i> Noticias</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-xl mb-8 uppercase tracking-wider text-brand-yellow border-b border-blue-800 pb-2 inline-block">Contacto</h4>
+                <div class="text-base text-gray-300 space-y-6">
+                    <p class="flex items-start gap-3"><i class="fas fa-map-marker-alt mt-1 text-brand-yellow"></i> Concejo de Bogotá D.C.</p>
+                    <p class="font-bold text-white text-xl flex items-center gap-3"><i class="fas fa-phone text-brand-yellow"></i> +57 311 867 8830</p>
+                    <p><a href="mailto:info@uscateguicol.com" class="hover:text-brand-yellow flex items-center gap-3"><i class="fas fa-envelope text-brand-yellow"></i> info@uscateguicol.com</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 pt-10 border-t border-blue-900 text-center text-sm text-gray-400 font-light">
+            &copy; 2024 Equipo de la Seguridad. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script>
+        // --- DATOS DE LOS VIDEOS ---
+        const documentalesData = [
+            {
+                id: "s8g-jDo49EY?si=6sCuHfVL2y3Uisj0",
+                title: "Operación Ayacucho",
+                category: "Documental Especial"
+            },
+            {
+                id: "dQw4w9WgXcQ",
+                title: "¿Por qué llora el General?",
+                category: "Historia de vida"
+            },
+            {
+                id: "dQw4w9WgXcQ",
+                title: "La Verdad Oculta",
+                category: "Investigación"
+            },
+            {
+                id: "dQw4w9WgXcQ", 
+                title: "Héroes de la Patria",
+                category: "Homenaje"
+            },
+            {
+                id: "dQw4w9WgXcQ", 
+                title: "Seguridad Ciudadana",
+                category: "Reportaje"
+            }
+        ];
+
+        const preguntasData = [
+            {
+                id: "dQw4w9WgXcQ",
+                title: "Respondiendo a la ciudadanía en Usaquén",
+                episode: "105"
+            },
+            {
+                id: "dQw4w9WgXcQ",
+                title: "Seguridad en Transmilenio: ¿Qué estamos haciendo?",
+                episode: "106"
+            },
+            {
+                id: "dQw4w9WgXcQ",
+                title: "Propiedad Horizontal: Nuevas propuestas",
+                episode: "107"
+            },
+            {
+                id: "dQw4w9WgXcQ",
+                title: "Debate sobre el Metro",
+                episode: "108"
+            },
+            {
+                id: "dQw4w9WgXcQ",
+                title: "Cámaras de seguridad inteligentes",
+                episode: "109"
+            }
+        ];
+
+        const intervencionesData = [
+            {
+                id: "dQw4w9WgXcQ",
+                date: "20 DE AGOSTO 2019",
+                title: "Moción de Censura",
+                desc: "Debate de control político sobre la seguridad nacional y defensa de la fuerza pública."
+            },
+            {
+                id: "dQw4w9WgXcQ",
+                date: "ENTREVISTA",
+                title: "La Hora de la Verdad",
+                desc: "Análisis de la coyuntura política actual y propuestas para Bogotá."
+            },
+            {
+                id: "dQw4w9WgXcQ",
+                date: "27 DE AGOSTO 2020",
+                title: "Constancia Plenaria",
+                desc: "Denuncia pública sobre irregularidades en contratación local."
+            },
+            {
+                id: "dQw4w9WgXcQ",
+                date: "15 DE MARZO 2024",
+                title: "Debate de Seguridad",
+                desc: "Propuestas para mejorar los frentes de seguridad."
+            },
+             {
+                id: "dQw4w9WgXcQ",
+                date: "10 DE ABRIL 2024",
+                title: "Control Político",
+                desc: "Seguimiento a la ejecución presupuestal en seguridad."
+            }
+        ];
+
+        // --- FUNCIONES DE RENDERIZADO ---
+
+        function renderVideoCard(video) {
+            return `
+                <div class="video-card group rounded-xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="relative aspect-video bg-black">
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/${video.id}" title="${video.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-brand-blue group-hover:text-brand-red transition line-clamp-2">${video.title}</h3>
+                        <p class="text-sm text-gray-500 mt-1">${video.category || ''}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderEpisodeCard(video) {
+            return `
+                <div class="video-card group rounded-xl overflow-hidden shadow-lg border border-gray-100">
+                    <div class="relative aspect-video bg-black">
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/${video.id}" title="${video.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="p-4 relative">
+                        <div class="absolute -top-4 right-4 bg-brand-yellow text-brand-blue text-xs font-black px-3 py-1 rounded shadow">EP ${video.episode}</div>
+                        <h3 class="mt-2 text-lg font-bold text-gray-800 leading-tight line-clamp-2">${video.title}</h3>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderInterventionCard(video) {
+            return `
+                <div class="video-card flex flex-col h-full bg-white border border-gray-100 shadow-sm hover:shadow-xl rounded-xl overflow-hidden">
+                    <div class="relative bg-black aspect-video">
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/${video.id}" title="${video.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="text-xs text-brand-yellow font-bold uppercase mb-2">${video.date}</div>
+                        <h3 class="text-xl font-bold text-brand-blue mb-3 line-clamp-1">${video.title}</h3>
+                        <p class="text-gray-600 text-sm mb-4 flex-1 line-clamp-3">${video.desc}</p>
+                        <button class="text-brand-red font-bold text-sm uppercase flex items-center gap-2 hover:gap-3 transition-all mt-auto">Ver detalles <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function populateSection(containerId, data, renderFunction) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = data.map(renderFunction).join('');
+        }
+
+        // --- FUNCIONALIDAD DE CARRUSEL MEJORADA ---
+        function scrollCarousel(containerId, direction) {
+            const container = document.getElementById(containerId);
+            // Desplazar el ancho del contenedor visible menos un pequeño margen para dar contexto
+            const scrollAmount = (container.clientWidth * 0.8) * direction; 
+            
+            container.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+
+        // --- INICIALIZACIÓN ---
+        document.addEventListener('DOMContentLoaded', () => {
+            populateSection('documentales-list', documentalesData, renderVideoCard);
+            populateSection('preguntas-list', preguntasData, renderEpisodeCard);
+            populateSection('intervenciones-list', intervencionesData, renderInterventionCard);
+
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mainNav = document.getElementById('main-nav');
+            if (menuBtn && mainNav) {
+                menuBtn.addEventListener('click', () => {
+                    mainNav.classList.toggle('hidden');
+                    mainNav.classList.toggle('flex');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

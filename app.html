@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipo de la Seguridad - App Oficial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Configuración Global */
+        html {
+            scroll-behavior: smooth; /* <-- ¡ESTA ES LA CLAVE! */
+        }
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
+            overflow-x: hidden;
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, .font-heading { font-family: 'Montserrat', sans-serif; }
+        
+        /* Paleta Institucional */
+        :root {
+            --brand-blue: #1F2A44;
+            --brand-yellow: #FFC72C;
+            --brand-red: #CE1126;
+            --brand-gray: #F4F6F8;
+        }
+        
+        .bg-brand-blue { background-color: var(--brand-blue); }
+        .text-brand-blue { color: var(--brand-blue); }
+        .bg-brand-yellow { background-color: var(--brand-yellow); }
+        .text-brand-yellow { color: var(--brand-yellow); }
+        .bg-brand-red { background-color: var(--brand-red); }
+        .text-brand-red { color: var(--brand-red); }
+        
+        /* Botones Redes Flotantes */
+        .social-float {
+            position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 10px; z-index: 50;
+        }
+        .social-btn {
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.4rem; box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .social-btn:hover { transform: scale(1.1); }
+        .btn-whatsapp { background-color: #25D366; }
+        .btn-facebook { background-color: #1877F2; }
+        .btn-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .btn-x { background-color: #000; }
+        .btn-tiktok { background-color: #000; }
+        .fill-current { fill: currentColor; }
+
+        /* Animaciones App (clases existentes) */
+        .blob-shape {
+            border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+        }
+        .animate-bounce-slow {
+            animation: bounce 3s infinite;
+        }
+        /* Ocultar barra de scroll en carrusel (Tailwind utilitarios) */
+        .scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="social-float hidden md:flex">
+        <a href="https://www.instagram.com/jjuscategui/" class="social-btn btn-instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com/jjUscategui" class="social-btn btn-x flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 512 512" class="fill-current">
+                <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+            </svg>
+        </a>
+        <a href="https://web.facebook.com/jjuscategui" class="social-btn btn-facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="http://wa.me/573102782407" class="social-btn btn-whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.tiktok.com/@jjuscategui" class="social-btn btn-tiktok"><i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <header class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="h-2 w-full flex">
+            <div class="bg-brand-yellow w-1/2"></div>
+            <div class="bg-brand-blue w-1/4"></div>
+            <div class="bg-brand-red w-1/4"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+                <div class="flex items-center justify-between w-full lg:w-auto gap-8">
+                    <a href="#" class="flex items-center border-r-4 border-gray-300 pr-6">
+                        <img src="https://uscateguicol.com/wp-content/uploads/2024/06/cropped-uscategui_logo.png" alt="Logo Uscátegui" class="h-12">
+                    </a>
+                    <button class="lg:hidden text-brand-blue text-3xl"><i class="fas fa-bars"></i></button>
+                </div>
+
+                <nav class="hidden lg:flex items-center gap-8 text-base font-bold text-gray-600 uppercase tracking-wide">
+                    <a href="#inicio" class="text-brand-blue border-b-4 border-brand-yellow pb-1">Inicio</a>
+                    <a href="#funciones" class="hover:text-brand-blue transition">Funciones</a>
+                    <a href="#como-funciona" class="hover:text-brand-blue transition">Cómo Funciona</a>
+                    <a href="#galeria" class="hover:text-brand-blue transition">Galería</a>
+                    <a href="#descargar" class="px-6 py-3 bg-brand-blue text-white rounded hover:bg-opacity-90 transition shadow-lg transform hover:-translate-y-0.5 text-base">
+                        Descargar App
+                    </a>
+                </nav>
+
+                <div class="hidden xl:block pl-6 border-l-4 border-gray-200">
+                    <a href="#" class="flex items-center">
+                        <img src="https://uscateguicol.com/wp-content/uploads/elementor/thumbs/IMG_1243-r97qb41sgpgd2vp0sn8jy55nhca1g44kflp0otnhwo.jpg" alt="Logo Julián Uscátegui Concejal" class="h-12">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="inicio" class="relative pt-12 pb-20 overflow-hidden bg-brand-blue text-white">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-brand-yellow opacity-10 rounded-l-full transform translate-x-1/4"></div>
+
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center relative z-10">
+            <div class="w-full md:w-1/2 text-center md:text-left mb-12 md:mb-0 pt-10">
+                <span class="inline-block py-1 px-3 rounded-full bg-brand-yellow text-brand-blue font-bold text-xs uppercase mb-4 shadow-md">
+                    <i class="fas fa-shield-alt mr-1"></i> Tu App de Confianza
+                </span>
+                <h1 class="text-4xl md:text-6xl font-black font-heading leading-tight mb-6">
+                    La Seguridad es <br/><span class="text-brand-yellow">Tu Escudo</span>
+                </h1>
+                <p class="text-lg md:text-xl text-blue-100 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0 font-light">
+                    Reporta incidentes, recibe alertas en tiempo real y conecta con las autoridades al instante. Protegemos tu mundo desde la palma de tu mano.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start items-center">
+                    <div class="flex gap-3">
+                        <button class="bg-white text-brand-blue px-6 py-3 rounded-lg flex items-center gap-3 hover:bg-brand-yellow transition shadow-lg w-48 justify-center">
+                            <i class="fab fa-apple text-3xl"></i>
+                            <div class="text-left">
+                                <div class="text-xs">Consíguelo en el</div>
+                                <div class="font-bold text-lg leading-none">App Store</div>
+                            </div>
+                        </button>
+                        <button class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg flex items-center gap-3 hover:bg-white/10 transition shadow-lg w-48 justify-center">
+                            <i class="fab fa-google-play text-2xl"></i>
+                            <div class="text-left">
+                                <div class="text-xs">Disponible en</div>
+                                <div class="font-bold text-lg leading-none">Google Play</div>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="hidden lg:flex items-center gap-3 ml-4 bg-white/10 p-2 rounded-lg backdrop-blur-sm border border-white/20">
+                        <div class="bg-white p-1 rounded">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=EquipoSeguridadApp" alt="QR Descarga" class="w-14 h-14">
+                        </div>
+                        <div class="text-xs text-left leading-tight opacity-80">
+                            Escanea para<br>descargar ahora
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/2 relative flex justify-center items-center">
+                <div class="absolute bg-brand-yellow w-96 h-96 rounded-full opacity-20 blur-3xl -z-10"></div>
+                
+                <div class="relative">
+                    <div class="relative z-20 border-gray-900 bg-gray-900 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-2xl mx-auto">
+                        <div class="h-[32px] w-[3px] bg-gray-900 absolute -left-[17px] top-[72px] rounded-l-lg"></div>
+                        <div class="h-[46px] w-[3px] bg-gray-900 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
+                        <div class="h-[46px] w-[3px] bg-gray-900 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
+                        <div class="h-[64px] w-[3px] bg-gray-900 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
+                        <div class="rounded-[2rem] overflow-hidden w-full h-full bg-white relative">
+                            <div class="bg-brand-blue h-full w-full flex flex-col">
+                                <div class="h-1/2 bg-cover bg-center" style="background-image: url('https://placehold.co/300x400/1F2A44/FFFFFF/png?text=Mapa+Seguridad');"></div>
+                                <div class="p-6 text-center">
+                                    <div class="w-16 h-16 bg-brand-yellow rounded-full mx-auto -mt-14 border-4 border-white flex items-center justify-center text-2xl shadow-lg">🛡️</div>
+                                    <h3 class="font-bold text-lg mt-4 text-white">Hola, Ciudadano</h3>
+                                    <p class="text-sm text-gray-300 mt-2">¿Qué deseas reportar hoy?</p>
+                                    <div class="grid grid-cols-2 gap-3 mt-6">
+                                        <div class="bg-white/10 p-3 rounded text-white text-xs hover:bg-white/20 cursor-pointer transition">🚑 Emergencia</div>
+                                        <div class="bg-white/10 p-3 rounded text-white text-xs hover:bg-white/20 cursor-pointer transition">🚔 Incidente</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="funciones" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-black font-heading text-brand-blue mb-4">Todo lo que necesitas para tu tranquilidad</h2>
+                <div class="w-24 h-1 bg-brand-yellow mx-auto rounded"></div>
+                <p class="mt-4 text-gray-600 text-lg">Una herramienta integral diseñada para conectar a la ciudadanía con las fuerzas de seguridad de manera eficiente.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="p-8 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-xl transition border border-gray-100 group text-center transform hover:-translate-y-1 duration-300">
+                    <div class="w-16 h-16 bg-blue-100 text-brand-blue rounded-full flex items-center justify-center text-2xl mb-6 mx-auto group-hover:bg-brand-blue group-hover:text-white transition">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 text-brand-blue">Reportes Ciudadanos</h3>
+                    <p class="text-sm text-gray-500">Envía solicitudes sobre infraestructura, iluminación o situaciones sospechosas con fotos y ubicación.</p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-xl transition border border-gray-100 group text-center transform hover:-translate-y-1 duration-300">
+                    <div class="w-16 h-16 bg-blue-100 text-brand-blue rounded-full flex items-center justify-center text-2xl mb-6 mx-auto group-hover:bg-brand-blue group-hover:text-white transition">
+                        <i class="fas fa-history"></i> 
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 text-brand-blue">Trazabilidad Total</h3>
+                    <p class="text-sm text-gray-500">Accede al **historial completo** de tus reportes, verificando el estado de atención y las acciones tomadas por las autoridades.</p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-xl transition border border-gray-100 group text-center transform hover:-translate-y-1 duration-300">
+                    <div class="w-16 h-16 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center text-2xl mb-6 mx-auto group-hover:bg-brand-yellow group-hover:text-white transition">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 text-brand-blue">Seguimiento Real</h3>
+                    <p class="text-sm text-gray-500">Monitorea el estado de tus solicitudes y visualiza incidentes cercanos en el mapa de calor.</p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-xl transition border border-gray-100 group text-center transform hover:-translate-y-1 duration-300">
+                    <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mb-6 mx-auto group-hover:bg-green-600 group-hover:text-white transition">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 text-brand-blue">Peticiones</h3>
+                    <p class="text-sm text-gray-500">Gestiona peticiones formales a las entidades de seguridad de forma transparente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-brand-blue text-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+
+        <div class="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-12">
+            <div class="w-full md:w-1/2">
+                <img src="imgs/personas.png" alt="Ciudadanos seguros" class="rounded-xl shadow-2xl border-4 border-brand-yellow">
+            </div>
+            <div class="w-full md:w-1/2">
+                <h2 class="text-3xl md:text-4xl font-black font-heading mb-6">¿Por qué usar el <span class="text-brand-yellow">Equipo de la Seguridad</span>?</h2>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-brand-red p-3 rounded-lg mt-1 shrink-0">
+                            <i class="fas fa-bolt text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xl mb-1">Respuesta Inmediata</h4>
+                            <p class="text-blue-100 text-sm">Eliminamos la burocracia. Tu alerta llega directamente a quien puede ayudarte.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="bg-brand-yellow p-3 rounded-lg mt-1 shrink-0">
+                            <i class="fas fa-lock text-brand-blue"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xl mb-1">Seguridad Garantizada</h4>
+                            <p class="text-blue-100 text-sm">Tus datos están encriptados y protegidos. Reporta con total confianza.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="bg-white/20 p-3 rounded-lg mt-1 shrink-0">
+                            <i class="fas fa-users text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xl mb-1">Comunidad Activa</h4>
+                            <p class="text-blue-100 text-sm">Únete a miles de ciudadanos construyendo un entorno más seguro para todos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="como-funciona" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-black font-heading text-brand-blue">Tan fácil como 1, 2, 3</h2>
+            </div>
+
+            <div class="relative">
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-200 -z-10 -translate-y-1/2"></div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-sm text-center relative border border-gray-100">
+                        <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 border-4 border-white shadow">1</div>
+                        <h4 class="font-bold text-lg mb-2 text-brand-blue">Descarga y Regístrate</h4>
+                        <p class="text-sm text-gray-500">Disponible gratis en tiendas iOS y Android. Crea tu perfil en segundos.</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-sm text-center relative border border-gray-100">
+                        <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 border-4 border-white shadow">2</div>
+                        <h4 class="font-bold text-lg mb-2 text-brand-blue">Reporta o Alerta</h4>
+                        <p class="text-sm text-gray-500">Selecciona el tipo de incidente, toma una foto y confirma tu ubicación.</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-xl shadow-sm text-center relative border border-gray-100">
+                        <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 border-4 border-white shadow">3</div>
+                        <h4 class="font-bold text-lg mb-2 text-brand-blue">Recibe Ayuda</h4>
+                        <p class="text-sm text-gray-500">El equipo de la seguridad recibe tu caso y te notifican sobre el avance y solución.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeria" class="py-20 bg-white overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-3xl font-black font-heading text-brand-blue">Dentro de la App</h2>
+                    <p class="text-gray-500">Interfaz intuitiva y moderna.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button id="prevBtn" class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-brand-blue hover:text-white transition"><i class="fas fa-arrow-left"></i></button>
+                    <button id="nextBtn" class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-brand-blue hover:text-white transition"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div id="galleryContainer" class="flex gap-6 overflow-x-auto pb-8 snap-x scrollbar-hide">
+                <div class="min-w-[250px] md:min-w-[300px] snap-center">
+                    <img src="imgs/login.jpg" class="rounded-[2rem] shadow-xl border-8 border-gray-800 w-full" alt="Pantalla Login">
+                    <p class="text-center mt-4 font-semibold text-gray-600">Inicio Seguro</p>
+                </div>
+                <div class="min-w-[250px] md:min-w-[300px] snap-center">
+                    <img src="imgs/register.jpg" class="rounded-[2rem] shadow-xl border-8 border-gray-800 w-full" alt="Pantalla Mapa">
+                    <p class="text-center mt-4 font-semibold text-gray-600">Crear Cuenta</p>
+                </div>
+                <div class="min-w-[250px] md:min-w-[300px] snap-center">
+                    <img src="imgs/home.jpg" class="rounded-[2rem] shadow-xl border-8 border-gray-800 w-full" alt="Pantalla Reporte">
+                    <p class="text-center mt-4 font-semibold text-gray-600">Pantalla Principal</p>
+                </div>
+                <div class="min-w-[250px] md:min-w-[300px] snap-center">
+                    <img src="imgs/crear.jpg" class="rounded-[2rem] shadow-xl border-8 border-gray-800 w-full" alt="Pantalla Perfil">
+                    <p class="text-center mt-4 font-semibold text-gray-600">Crear Solicitud</p>
+                </div>
+                <div class="min-w-[250px] md:min-w-[300px] snap-center">
+                    <img src="imgs/detalle.jpg" class="rounded-[2rem] shadow-xl border-8 border-gray-800 w-full" alt="Pantalla Perfil">
+                    <p class="text-center mt-4 font-semibold text-gray-600">Detalle solicitud</p>
+                </div>
+                <div class="min-w-[250px] md:min-w-[300px] snap-center">
+                    <img src="imgs/solicitudes.jpg" class="rounded-[2rem] shadow-xl border-8 border-gray-800 w-full" alt="Pantalla Perfil">
+                    <p class="text-center mt-4 font-semibold text-gray-600">Ver mis solicitudes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="descargar" class="py-24 bg-brand-yellow text-brand-blue relative">
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-black font-heading mb-6">¿Listo para sentirte más seguro?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto font-semibold text-blue-900">Descarga la aplicación hoy mismo y forma parte del equipo que protege tu ciudad.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="bg-brand-blue text-white px-8 py-4 rounded-full font-bold hover:bg-gray-900 transition shadow-xl transform hover:scale-105 flex items-center gap-2">
+                    <i class="fab fa-apple text-xl"></i> Descargar para iOS
+                </button>
+                <button class="bg-white text-brand-blue px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition shadow-xl transform hover:scale-105 flex items-center gap-2">
+                    <i class="fab fa-google-play text-xl"></i> Descargar para Android
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-brand-blue text-white pt-24 pb-12 border-t-[12px] border-brand-yellow">
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-16 mb-16">
+            <div class="md:col-span-1 space-y-8">
+                <div class="bg-white p-6 rounded-lg inline-block shadow-lg">
+                    <a href="#" class="flex items-center border-r-4 border-gray-300 pr-6">
+                        <img src="https://uscateguicol.com/wp-content/uploads/2024/06/cropped-uscategui_logo.png" alt="Logo Uscátegui" class="h-12">
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-xl mb-8 uppercase tracking-wider text-brand-yellow border-b border-blue-800 pb-2 inline-block">Navegación</h4>
+                <ul class="space-y-4 text-base text-gray-300">
+                    <li><a href="#inicio" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-brand-yellow"></i> Inicio</a></li>
+                    <li><a href="#funciones" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-brand-yellow"></i> Funciones</a></li>
+                    <li><a href="#descargar" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-brand-yellow"></i> Descargar</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-xl mb-8 uppercase tracking-wider text-brand-yellow border-b border-blue-800 pb-2 inline-block">Contacto</h4>
+                <div class="text-base text-gray-300 space-y-6">
+                    <p class="flex items-start gap-3"><i class="fas fa-map-marker-alt mt-1 text-brand-yellow"></i> Concejo de Bogotá D.C.</p>
+                    <p class="font-bold text-white text-xl flex items-center gap-3"><i class="fas fa-phone text-brand-yellow"></i> +57 311 867 8830</p>
+                    <p><a href="mailto:info@uscateguicol.com" class="hover:text-brand-yellow flex items-center gap-3"><i class="fas fa-envelope text-brand-yellow"></i> info@uscateguicol.com</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 pt-10 border-t border-blue-900 text-center text-sm text-gray-400 font-light">
+            &copy; 2024 Equipo de la Seguridad. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script>
+        // Obtener los elementos del DOM usando los IDs
+        const galleryContainer = document.getElementById('galleryContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        // Función para desplazar el carrusel
+        function scrollGallery(direction) {
+            // Se usa 350px como desplazamiento para asegurar que el ancho de la tarjeta (~300px)
+            // más el espacio (gap) se cubran en un solo paso.
+            const scrollAmount = 350; 
+            
+            if (galleryContainer) {
+                galleryContainer.scrollBy({
+                    left: direction * scrollAmount,
+                    behavior: 'smooth' 
+                });
+            }
+        }
+
+        // Event Listeners para los botones
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                scrollGallery(-1); // Desplazar a la izquierda
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                scrollGallery(1); // Desplazar a la derecha
+            });
+        }
+    </script>
+    </body>
+</html>

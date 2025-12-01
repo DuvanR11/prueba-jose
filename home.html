@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julián Uscátegui - Concejal de Bogotá</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Actualizamos a la versión más reciente de FontAwesome por si acaso, pero usaremos SVG para X -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Configuración Global */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
+            overflow-x: hidden;
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, .font-heading { font-family: 'Montserrat', sans-serif; }
+
+        /* Paleta */
+        :root {
+            --brand-blue: #1F2A44;
+            --brand-yellow: #FFC72C;
+            --brand-red: #CE1126;
+            --brand-gray: #F4F6F8;
+        }
+
+        .bg-brand-blue { background-color: var(--brand-blue); }
+        .text-brand-blue { color: var(--brand-blue); }
+        .bg-brand-yellow { background-color: var(--brand-yellow); }
+        .text-brand-yellow { color: var(--brand-yellow); }
+        .bg-brand-red { background-color: var(--brand-red); }
+        .text-brand-red { color: var(--brand-red); }
+
+        /* Slider Hero */
+        .hero-slider { position: relative; height: 700px; overflow: hidden; }
+        .hero-slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; transition: opacity 1s ease-in-out;
+            background-size: cover; background-position: center;
+            pointer-events: none; /* Evita clicks en slides ocultos */
+            z-index: 0;
+        }
+        .hero-slide.active { 
+            opacity: 1; 
+            pointer-events: auto; /* Permite clicks en slide activo */
+            z-index: 10;
+        }
+        .hero-overlay { background: linear-gradient(to right, rgba(31, 42, 68, 0.95) 0%, rgba(31, 42, 68, 0.5) 100%); }
+
+        /* Slider Equipo */
+        .team-carousel-container { overflow: hidden; position: relative; }
+        .team-track { display: flex; transition: transform 0.5s ease-in-out; width: 100%; }
+        .team-card { min-width: 100%; flex-shrink: 0; }
+
+        /* Botones Redes */
+        .social-float {
+            position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 10px; z-index: 50;
+        }
+        .social-btn {
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.4rem; box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .social-btn:hover { transform: scale(1.1); }
+        .btn-whatsapp { background-color: #25D366; }
+        .btn-facebook { background-color: #1877F2; }
+        .btn-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .btn-x { background-color: #000; } /* Fondo negro para X */
+        .btn-tiktok { background-color: #000; }
+
+        /* SVG Icon Fill */
+        .fill-current { fill: currentColor; }
+
+        /* Contador de Vistas Flotante */
+        .views-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 50;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.9rem;
+            color: #4b5563;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.3s ease;
+        }
+        .views-counter:hover {
+            transform: translateY(-2px);
+        }
+        .chart-icon {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 16px;
+        }
+        .chart-bar { width: 4px; border-radius: 2px 2px 0 0; }
+        .bar-1 { height: 60%; background-color: var(--brand-blue); }
+        .bar-2 { height: 100%; background-color: var(--brand-yellow); }
+        .bar-3 { height: 80%; background-color: var(--brand-red); }
+
+
+        /* Tabs */
+        .tab-btn.active {
+            background-color: var(--brand-blue); color: white; transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        .tab-btn.active i { color: var(--brand-yellow); }
+        .tab-btn.inactive { background-color: #F3F4F6; color: #6B7280; }
+        .tab-btn.inactive:hover { background-color: #E5E7EB; }
+        .tab-content { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-white text-lg">
+
+    <!-- Contador de Vistas (Nuevo) -->
+    <div class="views-counter">
+        <div class="chart-icon">
+            <div class="chart-bar bar-1"></div>
+            <div class="chart-bar bar-2"></div>
+            <div class="chart-bar bar-3"></div>
+        </div>
+        <span class="font-bold" id="page-views-count">6643 vistas</span>
+    </div>
+
+    <!-- Redes Flotantes -->
+    <div class="social-float hidden md:flex">
+        <a href="https://www.instagram.com/jjuscategui/" class="social-btn btn-instagram"><i class="fab fa-instagram"></i></a>
+        <!-- Botón X con SVG directo para asegurar que se vea -->
+        <a href="https://x.com/jjUscategui" class="social-btn btn-x flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 512 512" class="fill-current">
+                <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+            </svg>
+        </a>
+        <a href="#" class="social-btn btn-facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://api.whatsapp.com/send/?phone=573118678830&text&type=phone_number&app_absent=0" class="social-btn btn-whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="" class="social-btn btn-tiktok"><i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <!-- 1. Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="h-2 w-full flex">
+            <div class="bg-brand-yellow w-1/2"></div>
+            <div class="bg-brand-blue w-1/4"></div>
+            <div class="bg-brand-red w-1/4"></div>
+        </div>
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+                <div class="flex items-center justify-between w-full lg:w-auto gap-8">
+                    <a href="#" class="flex items-center border-r-4 border-gray-300 pr-6">
+                        <img src="https://uscateguicol.com/wp-content/uploads/2024/06/cropped-uscategui_logo.png" alt="Logo Uscátegui" class="h-12">
+                    </a>
+                    <button id="mobile-menu-btn" class="lg:hidden text-brand-blue text-3xl focus:outline-none cursor-pointer"><i class="fas fa-bars"></i></button>
+                </div>
+                <!-- Se agregó ID 'main-nav' y clases 'flex-col lg:flex-row' para manejo móvil -->
+                <nav id="main-nav" class="hidden lg:flex flex-col lg:flex-row items-center gap-4 lg:gap-8 text-base font-bold text-gray-600 uppercase tracking-wide w-full lg:w-auto mt-4 lg:mt-0">
+                    <a href="home.html" class="text-brand-blue border-b-4 border-brand-yellow pb-1">Inicio</a>
+                    <a href="videos.html" class="hover:text-brand-blue transition">Videos</a>
+                    <a href="avances.html" class="hover:text-brand-blue transition">Seguridad</a>
+                    <a href="aliados.html" class="hover:text-brand-blue transition">Aliados</a>
+                    <a href="noticias.html" class="hover:text-brand-blue transition">Noticias</a>
+                    <a href="unete.html" class="px-6 py-3 bg-brand-blue text-white rounded hover:bg-opacity-90 transition shadow-lg transform hover:-translate-y-0.5 text-base w-full lg:w-auto text-center lg:text-left">Únete al equipo</a>
+                </nav>
+                <div class="hidden xl:block pl-6 border-l-4 border-gray-200">
+                    <a href="#" class="flex items-center">
+                        <img src="https://uscateguicol.com/wp-content/uploads/elementor/thumbs/IMG_1243-r97qb41sgpgd2vp0sn8jy55nhca1g44kflp0otnhwo.jpg" alt="Logo Julián Uscátegui Concejal" class="h-12">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section -->
+    <section class="hero-slider relative bg-gray-900">
+        <!-- Slide 1 (Activo) -->
+        <div class="hero-slide active" style="background-image: url('https://uscateguicol.com/wp-content/uploads/2024/06/slide_2.jpg');">
+            <div class="hero-overlay absolute inset-0 flex items-center">
+                <div class="container mx-auto px-6 grid md:grid-cols-2">
+                    <div class="text-white z-10 animate-fade-in-up pl-4 md:pl-12">
+                        <div class="inline-block bg-brand-red px-4 py-2 text-sm font-bold uppercase tracking-wider mb-6 rounded shadow-lg">Liderazgo Firme</div>
+                        <h1 class="text-5xl md:text-7xl font-black font-heading leading-tight mb-6 drop-shadow-lg">
+                            José Jaime <br/><span class="text-brand-yellow">Uscátegui Pastrana</span>
+                        </h1>
+                        <p class="text-2xl md:text-3xl font-light mb-2 text-gray-100">Congresista de la República de Colombia</p>
+                        <p class="text-xl text-brand-yellow font-bold tracking-widest mb-10 border-l-4 border-brand-yellow pl-4">2018 – 2022</p>
+                        <p class="text-xl text-brand-yellow font-bold tracking-widest mb-10 border-l-4 border-brand-yellow pl-4">2022 – 2026</p>
+                        <a href="#" class="inline-block bg-white text-brand-blue px-10 py-4 font-extrabold text-lg hover:bg-brand-yellow hover:text-brand-blue transition duration-300 uppercase tracking-wider rounded shadow-xl">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="hero-slide" style="background-image: url('https://uscateguicol.com/wp-content/uploads/2025/03/IMG-20250303-WA0014-scaled-e1741212571842.jpg');">
+            <div class="hero-overlay absolute inset-0 flex items-center">
+                <div class="container mx-auto px-6 grid md:grid-cols-2">
+                    <div class="text-white z-10 animate-fade-in-up pl-4 md:pl-12">
+                        <div class="inline-block bg-brand-red px-4 py-2 text-sm font-bold uppercase tracking-wider mb-6 rounded shadow-lg">Liderazgo Firme</div>
+                        <h1 class="text-5xl md:text-7xl font-black font-heading leading-tight mb-6 drop-shadow-lg">
+                            Julián Uscátegui <br/><span class="text-brand-yellow">Pastrana</span>
+                        </h1>
+                        <p class="text-2xl md:text-3xl font-light mb-2 text-gray-100">Concejal de Bogotá D.C.</p>
+                        <p class="text-xl text-brand-yellow font-bold tracking-widest mb-10 border-l-4 border-brand-yellow pl-4">2024 – 2027</p>
+                        <a href="#" class="inline-block bg-white text-brand-blue px-10 py-4 font-extrabold text-lg hover:bg-brand-yellow hover:text-brand-blue transition duration-300 uppercase tracking-wider rounded shadow-xl">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="hero-slide" style="background-image: url('https://uscateguicol.com/wp-content/uploads/2024/06/slide_1-scaled.jpg');">
+            <div class="hero-overlay absolute inset-0 flex items-center">
+                <div class="container mx-auto px-6 grid md:grid-cols-2">
+                    <div class="text-white z-10 animate-fade-in-up pl-4 md:pl-12">
+                        <div class="inline-block bg-brand-red px-4 py-2 text-sm font-bold uppercase tracking-wider mb-6 rounded shadow-lg">Liderazgo Firme</div>
+                        <h1 class="text-5xl md:text-7xl font-black font-heading leading-tight mb-6 drop-shadow-lg">
+                            Equipo <br/><span class="text-brand-yellow">Uscátegui</span>
+                        </h1>
+                        <p class="text-2xl md:text-3xl font-light mb-2 text-gray-100">Más que los discursos queremos dar herramientas a la ciudadanía.</p>
+                        <a href="#" class="inline-block bg-white text-brand-blue px-10 py-4 font-extrabold text-lg hover:bg-brand-yellow hover:text-brand-blue transition duration-300 uppercase tracking-wider rounded shadow-xl">Únete como voluntario</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Flechas Hero -->
+        <button id="hero-prev" class="absolute top-1/2 left-4 transform -translate-y-1/2 text-white text-4xl opacity-50 hover:opacity-100 z-20 transition cursor-pointer bg-black/20 hover:bg-black/50 p-2 rounded-full h-12 w-12 flex items-center justify-center" onclick="prevHeroSlide()"><i class="fas fa-chevron-left"></i></button>
+        <button id="hero-next" class="absolute top-1/2 right-4 transform -translate-y-1/2 text-white text-4xl opacity-50 hover:opacity-100 z-20 transition cursor-pointer bg-black/20 hover:bg-black/50 p-2 rounded-full h-12 w-12 flex items-center justify-center" onclick="nextHeroSlide()"><i class="fas fa-chevron-right"></i></button>
+    </section>
+
+    <!-- 3. Agradecimiento -->
+    <section id="agradecimiento" class="flex flex-col md:flex-row min-h-[600px]">
+        <div class="w-full md:w-1/2 bg-cover bg-center relative min-h-[400px]" style="background-image: url('https://uscateguicol.com/wp-content/uploads/2024/06/bandera-colombia.avif');">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
+        </div>
+        <div class="w-full md:w-1/2 bg-white flex flex-col justify-center items-center p-12 md:p-24 text-center">
+            <div class="max-w-2xl">
+                <i class="fas fa-quote-left text-5xl text-brand-yellow mb-8 opacity-80 block mx-auto md:mx-0"></i>
+                <h2 class="text-4xl md:text-5xl font-black font-heading text-brand-blue leading-tight mb-8 uppercase tracking-tight">
+                    "Gracias por creer y confiar en <br/>el equipo de la seguridad."
+                </h2>
+                <p class="text-gray-600 text-xl md:text-2xl mb-12 leading-relaxed font-light">
+                    La democracia es el eco de las voces de todos, uniendo nuestras diferencias en un coro de igualdad, libertad y justicia.
+                </p>
+                <div class="inline-block transform scale-110">
+                    <a href="#" class="flex items-center border-r-4 border-gray-300 pr-6">
+                        <img src="https://uscateguicol.com/wp-content/uploads/2024/06/cropped-uscategui_logo.png" alt="Logo Uscátegui" class="h-12">
+                    </a>
+                    <div class="text-xs font-bold tracking-widest text-gray-500 uppercase -mt-1 text-center">REPRESENTANTE A LA CÁMARA</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Pilares de Seguridad -->
+    <section class="py-24 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl font-black font-heading text-brand-blue uppercase mb-4">Pilares del Equipo</h2>
+                <h3 class="text-4xl font-bold font-heading text-brand-blue uppercase opacity-70 mb-8">De la Seguridad</h3>
+                <p class="text-gray-600 text-xl max-w-3xl mx-auto">
+                    Existen temas que son fundamentales para nosotros y sobre los cuales estaremos siempre luchando.
+                </p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-6 mb-16">
+                <button onclick="switchTab('propiedad')" id="btn-propiedad" class="tab-btn active flex flex-col items-center justify-center w-full md:w-72 p-8 rounded-xl transition duration-300">
+                    <i class="far fa-building text-4xl mb-4"></i>
+                    <span class="font-bold uppercase tracking-wide text-lg">Propiedad Horizontal</span>
+                </button>
+                <button onclick="switchTab('salud')" id="btn-salud" class="tab-btn inactive flex flex-col items-center justify-center w-full md:w-72 p-8 rounded-xl transition duration-300">
+                    <i class="fas fa-hospital-user text-4xl mb-4"></i>
+                    <span class="font-bold uppercase tracking-wide text-lg">Salud Mental</span>
+                </button>
+                <button onclick="switchTab('seguridad')" id="btn-seguridad" class="tab-btn inactive flex flex-col items-center justify-center w-full md:w-72 p-8 rounded-xl transition duration-300">
+                    <i class="far fa-heart text-4xl mb-4"></i>
+                    <span class="font-bold uppercase tracking-wide text-lg">Seguridad</span>
+                </button>
+            </div>
+
+            <div class="bg-white rounded-[2rem] p-8 md:p-16 shadow-2xl border border-gray-100 min-h-[500px]">
+                <div id="content-propiedad" class="tab-content active">
+                    <div class="flex flex-col md:flex-row items-center gap-16">
+                        <div class="w-full md:w-1/2">
+                            <div class="relative rounded-2xl overflow-hidden shadow-2xl group">
+                                <img src="https://uscateguicol.com/wp-content/uploads/elementor/thumbs/equipo-2-scaled-qp4urvojfh1y6daa6p2itr84gqwvy1aypvn6cl4xfk.jpg" class="w-full h-auto transform group-hover:scale-105 transition duration-700">
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2">
+                            <h4 class="text-3xl md:text-4xl font-black font-heading text-brand-blue mb-8 leading-tight">Garantizando la protección y armonía en la Propiedad Horizontal</h4>
+                            <div class="w-24 h-2 bg-brand-red mb-8"></div>
+                            <p class="text-gray-600 mb-8 leading-relaxed text-lg text-justify">Para el equipo de seguridad, comprender el concepto de propiedad horizontal es crucial, ya que implica garantizar la seguridad tanto de las unidades individuales como de las áreas comunes. Esto incluye la protección contra intrusiones, el control de accesos, la vigilancia de las áreas compartidas y la coordinación con los propietarios para mantener un entorno seguro y tranquilo.</p>
+                            <p class="text-gray-600 mb-8 leading-relaxed text-lg text-justify">Además, deben trabajar en estrecha colaboración con los propietarios y la administración de la propiedad para implementar medidas de seguridad adecuadas y garantizar el bienestar de todos los residentes, por lo tanto los invitamos a conocer nuestro proyecto de actualización de la Ley 675 de 2001 y sus beneficios para el pais.</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-salud" class="tab-content">
+                    <div class="flex flex-col md:flex-row items-center gap-16">
+                        <div class="w-full md:w-1/2">
+                            <div class="relative rounded-2xl overflow-hidden shadow-2xl group">
+                                <img src="https://uscateguicol.com/wp-content/uploads/elementor/thumbs/slide_3-scaled-qp2rmp40ffv2r4ppjv6tcwdy4iew9ex14gvhha4ytc.jpg" class="w-full h-auto transform group-hover:scale-105 transition duration-700">
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2">
+                            <h4 class="text-3xl md:text-4xl font-black font-heading text-brand-blue mb-8 leading-tight">Priorizando la salud mental en nuestro país</h4>
+                            <div class="w-24 h-2 bg-brand-red mb-8"></div>
+                            <div class="text-gray-600 mb-8 leading-relaxed text-lg text-justify space-y-6">
+                                <p>El equipo de la seguridad reconoce que la salud mental es un componente integral de la seguridad ciudadana, y trabaja en colaboración con otros sectores, como el de la salud y el social, para garantizar que se aborden de manera efectiva las necesidades emocionales y psicológicas de la población, contribuyendo así a la creación de entornos seguros y saludables para todos.</p>
+                                <p>También nos referimos a la atención y promoción del bienestar psicológico de todos los miembros de la comunidad, incluidos los agentes de seguridad y la población en general. Esto implica reconocer la importancia de abordar los desafíos de salud mental dentro del contexto de la seguridad pública, ya que el bienestar emocional y psicológico influye en la capacidad de las personas para interactuar de manera segura y constructiva en su entorno.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-seguridad" class="tab-content">
+                    <div class="flex flex-col md:flex-row items-center gap-16">
+                        <div class="w-full md:w-1/2">
+                            <div class="relative rounded-2xl overflow-hidden shadow-2xl group">
+                                <img src="https://uscateguicol.com/wp-content/uploads/elementor/thumbs/seguridad-qp4sy9k4ct8dqalebu129tarngbhmnti147zc8f9s0.png" class="w-full h-auto transform group-hover:scale-105 transition duration-700">
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2">
+                            <h4 class="text-3xl md:text-4xl font-black font-heading text-brand-blue mb-8 leading-tight">Garantizando la seguridad en el país</h4>
+                            <div class="w-24 h-2 bg-brand-red mb-8"></div>
+                            <p class="text-gray-600 mb-8 leading-relaxed text-lg text-justify space-y-6">Hemos garantizado un entorno seguro y protegido para todos los ciudadanos, abordando tanto la prevención de delitos como la promoción del bienestar general.</p>
+                            <p class="text-gray-600 mb-8 leading-relaxed text-lg text-justify space-y-6">Con la colaboración de diferentes organismos gubernamentales, fuerzas del orden, comunidades locales y otros actores relevantes para identificar y abordar los desafíos de seguridad específicos de una sociedad, implementando medidas proactivas para prevenir la delincuencia, proteger a los ciudadanos y promover la convivencia pacífica.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Equipo Slider -->
+    <section class="py-16 bg-brand-blue text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5 pointer-events-none grid grid-cols-6 gap-8 transform -rotate-12 scale-150">
+            <div class="text-4xl font-black text-white text-center p-4 border border-white">LOGO</div>
+            <div class="text-4xl font-black text-white text-center p-4 border border-white">LOGO</div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-5xl md:text-6xl font-black font-heading uppercase text-white drop-shadow-md">Nuestro Equipo</h2>
+                <p class="mt-4 text-blue-200 text-lg md:text-xl max-w-3xl mx-auto font-light">Somos referentes de la seguridad, salud mental y la propiedad horizontal.</p>
+            </div>
+            
+            <div class="team-carousel-container max-w-6xl mx-auto bg-white text-gray-800 rounded-3xl shadow-2xl overflow-hidden relative border-4 border-white/10">
+                <div class="team-track flex transition-transform duration-500 ease-in-out" id="teamTrack">
+                    
+                    <!-- Tarjeta 1: José Jaime Uscátegui -->
+                    <div class="team-card w-full flex flex-col md:flex-row min-w-full">
+                        <div class="w-full md:w-5/12 relative bg-gray-200 min-h-[550px] h-[400px] md:h-auto">
+                            <img src="https://uscateguicol.com/wp-content/uploads/2024/06/jose_uscategui-scaled-e1741124546549-1537x2048.jpg" class="absolute inset-0 w-full h-full object-cover">
+                        </div>
+                        <div class="w-full md:w-7/12 p-8 md:p-16 flex flex-col justify-center bg-white relative">
+                            <h3 class="text-3xl md:text-4xl font-black font-heading text-brand-blue mb-2">José Jaime Uscátegui</h3>
+                            <div class="flex flex-col gap-1 mb-6">
+                                <div class="h-1 w-10 bg-brand-yellow mb-2"></div>
+                                <p class="text-brand-red font-bold uppercase text-base tracking-widest">Congresista de la República</p>
+                                <p class="text-brand-red font-bold uppercase text-base tracking-widest">2018 - 2022 y 2022 - 2026</p>
+                            </div>
+                            <div class="prose text-gray-600 text-lg leading-relaxed space-y-4 text-justify">
+                                <p>Representante a la Cámara por Bogotá electo por el partido Centro Democrático desde 2018 hasta la fecha. Oficial de la reserva policial y líder voluntario de la Defensa Civil Colombiana. Es profesional en Gobierno y Relaciones Internacionales de la Universidad Externado y Magíster en Política Social de la Universidad Javeriana.</p>
+                                <p>Actualmente hace parte de las siguientes comisiones del Congreso de la República: Comisión Primera Constitucional, Comisión de Derechos Humanos y Audiencias, Comisión Provida, Comisión de Seguimientos al Código de Seguridad y Convivencia (Ley 1801 de 2016), entre otras.</p>
+                            </div>
+                            <div class="flex gap-4 mt-6">
+                                <a href="https://web.facebook.com/jjuscategui" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-brand-blue hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                                <!-- Botón X SVG en Equipo -->
+                                <a href="https://x.com/jjUscategui" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-black hover:text-white transition">
+                                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" class="fill-current">
+                                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.instagram.com/jjuscategui/" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-pink-600 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.tiktok.com/@jjuscategui" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-black hover:text-white transition"><i class="fab fa-tiktok"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 2: Julián Uscátegui Pastrana -->
+                    <div class="team-card w-full flex flex-col md:flex-row min-w-full">
+                        <div class="w-full md:w-5/12 relative bg-gray-200 min-h-[550px] h-[400px] md:h-auto">
+                            <img src="https://resources.finalsite.net/images/v1685482541/sgseduco/vjhu50cxiulwwer4cgna/Julian_Uscategui_SGS_Alumni.jpg" class="absolute inset-0 w-full h-full object-cover">
+                        </div>
+                        <div class="w-full md:w-7/12 p-8 md:p-16 flex flex-col justify-center bg-white relative">
+                            <h3 class="text-3xl md:text-4xl font-black font-heading text-brand-blue mb-2">Julián Uscátegui Pastrana</h3>
+                            <div class="flex flex-col gap-1 mb-6">
+                                <div class="h-1 w-10 bg-brand-yellow mb-2"></div>
+                                <p class="text-brand-red font-bold uppercase text-base tracking-widest">Concejal de Bogotá D.C.</p>
+                                <p class="text-brand-red font-bold uppercase text-base tracking-widest">2024 - 2027</p>
+                            </div>
+                            <div class="prose text-gray-600 text-lg leading-relaxed space-y-4 text-justify">
+                                <p>Actualmente Concejal de Bogotá D.C. electo por el partido Centro Democrático desde enero del 2024, fue edil de la localidad de Usaquén en la ciudad de Bogotá D.C. para el periodo 2020-2023 representando al mismo partido. Líder voluntario de la Defensa Civil Colombiana. Bachiller del Colegio San Jorge de Inglaterra. Graduado en Jurisprudencia de la Universidad del Rosario.</p>
+                                <p>A lo largo de los últimos años, se ha destacado por su trabajo en pro de la juventud, seguridad ciudadana y la fuerza Pública. Es reconocido por la creación de Frentes Ciudadanos de Seguridad en la ciudad de Bogotá D.C.</p>
+                            </div>
+                            <div class="flex gap-4 mt-6">
+                                <a href="https://web.facebook.com/JulUscategui" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-brand-blue hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                                 <a href="https://x.com/JulUscategui" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-black hover:text-white transition">
+                                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" class="fill-current">
+                                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.instagram.com/juluscategui/" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-pink-600 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.tiktok.com/@juluscategui" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-black hover:text-white transition"><i class="fab fa-tiktok"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 3: Javier Alejandro Losada -->
+                    <div class="team-card w-full flex flex-col md:flex-row min-w-full">
+                        <div class="w-full md:w-5/12 relative bg-gray-200 min-h-[550px] h-[400px] md:h-auto">
+                            <img src="https://uscateguicol.com/wp-content/uploads/2024/06/c8ca8d82-5c79-45c5-97c8-6d186715b5f4-1152x1536.jpg" class="absolute inset-0 w-full h-full object-cover">
+                        </div>
+                        <div class="w-full md:w-7/12 p-8 md:p-16 flex flex-col justify-center bg-white relative">
+                            <h3 class="text-3xl md:text-4xl font-black font-heading text-brand-blue mb-2">Javier Alejandro Losada</h3>
+                            <div class="flex flex-col gap-1 mb-6">
+                                <div class="h-1 w-10 bg-brand-yellow mb-2"></div>
+                                <p class="text-brand-red font-bold uppercase text-base tracking-widest">Edil</p>
+                                <p class="text-brand-red font-bold uppercase text-base tracking-widest">2024 - 2027</p>
+                            </div>
+                            <div class="prose text-gray-600 text-lg leading-relaxed space-y-4 text-justify">
+                                <p>En la actualidad se desempeña como edil de la localidad de Suba, orgulloso hijo de militares, católico y abogado de profesión. Realizó su práctica jurídica en la Fiscalía General de la Nación y trabajó en el sector privado manejando temas de derecho ambiental y tributario.</p>
+                                <p>Su bandera principal es trabajar incansablemente para recuperar la seguridad en la localidad.</p>
+                                <p>Le encanta el deporte, en especial el fútbol, el baloncesto, el voleibol y el tenis. También sabe tocar trompeta y está aprendiendo a tocar saxofón. Su sueño es ser presidente de Colombia.</p>
+                            </div>
+                            <div class="flex gap-4 mt-6">
+                                <a href="https://web.facebook.com/jlosadap" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-brand-blue hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://x.com/jlosadap_" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-black hover:text-white transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" class="fill-current">
+                                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.instagram.com/jlosadap" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-pink-600 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.tiktok.com/@jlosadap" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-black hover:text-white transition"><i class="fab fa-tiktok"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 4: Sergio Cáceres Rojas -->
+                    <div class="team-card w-full flex flex-col md:flex-row min-w-full">
+                        <div class="w-full md:w-5/12 relative bg-gray-200 min-h-[550px] h-[400px] md:h-auto">
+                            <img src="https://uscateguicol.com/wp-content/uploads/2024/06/Imagen-de-WhatsApp-2025-03-10-a-las-19.49.50_22cc2f05-e1741654509378.jpg" class="absolute inset-0 w-full h-full object-cover">
+                        </div>
+                        <div class="w-full md:w-7/12 p-8 md:p-16 flex flex-col justify-center bg-white relative">
+                            <h3 class="text-3xl md:text-4xl font-black font-heading text-brand-blue mb-2">Sergio Cáceres Rojas</h3>
+                            <div class="flex flex-col gap-1 mb-6">
+                                <div class="h-1 w-10 bg-brand-yellow mb-2"></div>
+                                <p class="text-brand-red font-bold uppercase text-base tracking-widest">Edil localidad Usaquén</p>
+                                <p class="text-brand-red font-bold uppercase text-base tracking-widest">2024 - 2027</p>
+                            </div>
+                            <div class="prose text-gray-600 text-lg leading-relaxed space-y-4 text-justify">
+                                <p>Actualmente edil de la localidad de Usaquén, se encuentra culminando sus estudios en Jurisprudencia y Filosofía en la Universidad del Rosario. Fue Consejero Local y Distrital de Juventud de Usaquén, electo con una de las votaciones más altas en la ciudad.</p>
+                                <p>Ha trabajado en la redacción de políticas públicas y en la construcción de programas educativos, sociales y económicos que han beneficiado directamente a toda la comunidad.</p>
+                            </div>
+                            <div class="flex gap-4 mt-6">
+                                <a href="https://web.facebook.com/profile.php?id=100015999455781" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-brand-blue hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                                 <a href="https://x.com/sergiocaceresro" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-black hover:text-white transition">
+                                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" class="fill-current">
+                                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.instagram.com/sergiocaceresro" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-pink-600 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.tiktok.com/@sergiocaceresro" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-black hover:text-white transition"><i class="fab fa-tiktok"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 5: María Camila Pinzón -->
+                    <div class="team-card w-full flex flex-col md:flex-row min-w-full">
+                        <div class="w-full md:w-5/12 relative bg-gray-200 min-h-[550px] h-[400px] md:h-auto">
+                            <img src="https://uscateguicol.com/wp-content/uploads/2025/03/741686f2-2d65-421e-b998-ff1259ee4bf9-e1741124635287.jpg" class="absolute inset-0 w-full h-full object-cover">
+                        </div>
+                        <div class="w-full md:w-7/12 p-8 md:p-16 flex flex-col justify-center bg-white relative">
+                            <h3 class="text-3xl md:text-4xl font-black font-heading text-brand-blue mb-2">María Camila Pinzón</h3>
+                            <div class="flex flex-col gap-1 mb-6">
+                                <div class="h-1 w-10 bg-brand-yellow mb-2"></div>
+                                <p class="text-brand-red font-bold uppercase text-base tracking-widest">Edil localidad Teusaquillo</p>
+                                <p class="text-brand-red font-bold uppercase text-base tracking-widest">2024 - 2027</p>
+                            </div>
+                            <div class="prose text-gray-600 text-lg leading-relaxed space-y-4 text-justify">
+                                <p>Abogada en formación y aspirante a especialista en Derecho Administrativo. Con 26 años, cuenta con más de seis años de trayectoria política y se encuentra en su segundo período como edil.</p>
+                                <p>También es Directora Nacional de Juventudes en la Fundación Amigos del Ejército de Colombia, trabajando por la seguridad, el bienestar social y el reconocimiento de la Fuerza Pública.</p>
+                            </div>
+                            <div class="flex gap-4 mt-6">
+                                <a href="https://web.facebook.com/mariacamila.pinzonhernandez" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-brand-blue hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                                 <a href="https://x.com/macamila_pinzon" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-black hover:text-white transition">
+                                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" class="fill-current">
+                                        <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.instagram.com/maca.edil" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-pink-600 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.tiktok.com/@macaedil" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-blue hover:bg-black hover:text-white transition"><i class="fab fa-tiktok"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!-- Flechas rediseñadas -->
+                <button onclick="prevTeam()" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur text-brand-blue w-14 h-14 flex items-center justify-center shadow-lg hover:bg-brand-yellow transition rounded-r-xl z-20 text-xl cursor-pointer"><i class="fas fa-chevron-left"></i></button>
+                <button onclick="nextTeam()" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur text-brand-blue w-14 h-14 flex items-center justify-center shadow-lg hover:bg-brand-yellow transition rounded-l-xl z-20 text-xl cursor-pointer"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Únete -->
+    <section class="flex flex-col md:flex-row h-auto md:h-[700px]">
+        <div class="w-full md:w-1/2 bg-gray-50 flex items-center justify-center p-12 md:p-24">
+            <div class="text-center md:text-left">
+                <h2 class="text-5xl md:text-6xl font-black font-heading text-brand-blue mb-8 leading-tight">¡Bienvenido al <br/>Equipo de la <br/><span class="text-brand-red">Seguridad!</span></h2>
+                <p class="text-gray-600 text-2xl mb-12 max-w-lg font-light">Un placer tenerlos en nuestro equipo. Juntos construimos el cambio.</p>
+                <a href="#" class="inline-flex items-center gap-4 bg-brand-blue text-white px-10 py-5 font-bold rounded-lg hover:bg-brand-yellow hover:text-brand-blue transition shadow-2xl uppercase tracking-wider text-lg transform hover:scale-105">¡Únete! <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+        <div class="w-full md:w-1/2 bg-cover bg-center" style="background-image: url('https://uscateguicol.com/wp-content/uploads/elementor/thumbs/fondo-r2pgimqc2b6sfutio5ft5iv3deqxmzxi3wtptogjma.jpg');"></div>
+    </section>
+
+    <!-- 7. Footer -->
+    <footer class="bg-brand-blue text-white pt-24 pb-12 border-t-[12px] border-brand-yellow">
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-16 mb-16">
+            <div class="md:col-span-1 space-y-8">
+                <div class="bg-white p-6 rounded-lg inline-block shadow-lg">
+                     <a href="#" class="flex items-center border-r-4 border-gray-300 pr-6">
+                        <img src="https://uscateguicol.com/wp-content/uploads/2024/06/cropped-uscategui_logo.png" alt="Logo Uscátegui" class="h-12">
+                    </a>
+                </div>
+                <div class="bg-white p-6 rounded-lg inline-block shadow-lg">
+                     <a href="#" class="flex items-center">
+                        <img src="https://uscateguicol.com/wp-content/uploads/elementor/thumbs/IMG_1243-r97qb41sgpgd2vp0sn8jy55nhca1g44kflp0otnhwo.jpg" alt="Logo Julián Uscátegui Concejal" class="h-12">
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-xl mb-8 uppercase tracking-wider text-brand-yellow border-b border-blue-800 pb-2 inline-block">Navegación</h4>
+                <ul class="space-y-4 text-base text-gray-300">
+                    <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-brand-yellow"></i> Inicio</a></li>
+                    <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-brand-yellow"></i> Noticias</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-xl mb-8 uppercase tracking-wider text-brand-yellow border-b border-blue-800 pb-2 inline-block">Contacto</h4>
+                <div class="text-base text-gray-300 space-y-6">
+                    <p class="flex items-start gap-3"><i class="fas fa-map-marker-alt mt-1 text-brand-yellow"></i> Concejo de Bogotá D.C.</p>
+                    <p class="font-bold text-white text-xl flex items-center gap-3"><i class="fas fa-phone text-brand-yellow"></i> +57 311 867 8830</p>
+                    <p><a href="mailto:info@uscateguicol.com" class="hover:text-brand-yellow flex items-center gap-3"><i class="fas fa-envelope text-brand-yellow"></i> info@uscateguicol.com</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 pt-10 border-t border-blue-900 text-center text-sm text-gray-400 font-light">
+            &copy; 2024 Equipo de la Seguridad. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script>
+        // --- MENU MÓVIL (Nuevo) ---
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mainNav = document.getElementById('main-nav');
+
+        if (menuBtn && mainNav) {
+             menuBtn.addEventListener('click', () => {
+                // Alternar entre oculto y flex para mostrar/ocultar el menú
+                mainNav.classList.toggle('hidden');
+                mainNav.classList.toggle('flex');
+            });
+        }
+       
+
+        // --- CONTADOR DE VISTAS SIMULADO ---
+        const counterElement = document.getElementById('page-views-count');
+        
+        // Intentar obtener vistas guardadas, si no, empezar en un número realista basado en la imagen
+        let currentViews = localStorage.getItem('uscategui_page_views');
+        
+        if (!currentViews) {
+            // Empezar cerca de 6643 como en la imagen, más un random para que varíe
+            currentViews = 6640 + Math.floor(Math.random() * 50);
+        } else {
+            // Si ya existe, incrementar
+            currentViews = parseInt(currentViews) + 1;
+        }
+        
+        // Guardar nuevo valor
+        localStorage.setItem('uscategui_page_views', currentViews);
+        
+        // Mostrar con separadores de miles si fuera necesario, aunque el ejemplo es simple
+        counterElement.innerText = currentViews + " vistas";
+
+        // --- LOGICA HERO SLIDER ---
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        let currentHeroSlide = 0;
+        const totalHeroSlides = heroSlides.length;
+
+        function showHeroSlide(index) {
+            heroSlides.forEach(slide => slide.classList.remove('active'));
+            
+            // Loop cíclico
+            if (index >= totalHeroSlides) currentHeroSlide = 0;
+            else if (index < 0) currentHeroSlide = totalHeroSlides - 1;
+            else currentHeroSlide = index;
+            
+            heroSlides[currentHeroSlide].classList.add('active');
+        }
+        function nextHeroSlide() { showHeroSlide(currentHeroSlide + 1); }
+        function prevHeroSlide() { showHeroSlide(currentHeroSlide - 1); }
+        
+        // Auto-play cada 5 segundos
+        let heroInterval = setInterval(nextHeroSlide, 5000);
+        
+        // Pausar al interactuar
+        document.querySelectorAll('#hero-prev, #hero-next').forEach(btn => {
+            btn.addEventListener('click', () => {
+                clearInterval(heroInterval);
+                heroInterval = setInterval(nextHeroSlide, 5000);
+            });
+        });
+
+
+        // --- LOGICA TEAM SLIDER ---
+        let currentTeamSlide = 0;
+        const teamTrack = document.getElementById('teamTrack');
+        const teamCards = document.querySelectorAll('.team-card');
+        
+        function updateTeamSlider() {
+            // Usamos offsetWidth para mayor precisión
+            const width = teamTrack.parentElement.offsetWidth; 
+            teamTrack.style.transform = `translateX(-${currentTeamSlide * width}px)`;
+        }
+        
+        function nextTeam() {
+            if (currentTeamSlide < teamCards.length - 1) {
+                currentTeamSlide++;
+            } else {
+                currentTeamSlide = 0; 
+            }
+            updateTeamSlider();
+        }
+        
+        function prevTeam() {
+            if (currentTeamSlide > 0) {
+                currentTeamSlide--;
+            } else {
+                currentTeamSlide = teamCards.length - 1;
+            }
+            updateTeamSlider();
+        }
+        
+        // Ajustar al cambiar tamaño de ventana
+        window.addEventListener('resize', updateTeamSlider);
+        
+        // Inicializar
+        updateTeamSlider();
+
+
+        // --- TABS ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active', 'bg-brand-blue', 'text-white', 'shadow-xl');
+                el.classList.add('inactive', 'bg-gray-100', 'text-gray-500');
+            });
+            document.getElementById('content-' + tabId).classList.add('active');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('inactive', 'bg-gray-100', 'text-gray-500');
+            activeBtn.classList.add('active');
+        }
+    </script>
+</body>
+</html>

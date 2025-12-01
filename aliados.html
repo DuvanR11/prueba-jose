@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aliados - Julián Uscátegui</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CONFIGURACIÓN GLOBAL (Heredada) --- */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
+            overflow-x: hidden;
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, .font-heading { font-family: 'Montserrat', sans-serif; }
+
+        /* --- PALETA DE COLORES --- */
+        :root {
+            --brand-blue: #1F2A44;
+            --brand-yellow: #FFC72C;
+            --brand-red: #CE1126;
+            --brand-gray: #F4F6F8;
+        }
+
+        .bg-brand-blue { background-color: var(--brand-blue); }
+        .text-brand-blue { color: var(--brand-blue); }
+        .bg-brand-yellow { background-color: var(--brand-yellow); }
+        .text-brand-yellow { color: var(--brand-yellow); }
+        .bg-brand-red { background-color: var(--brand-red); }
+        .text-brand-red { color: var(--brand-red); }
+
+        /* --- REDES FLOTANTES --- */
+        .social-float {
+            position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 10px; z-index: 50;
+        }
+        .social-btn {
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.4rem; box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .social-btn:hover { transform: scale(1.1); }
+        .btn-whatsapp { background-color: #25D366; }
+        .btn-facebook { background-color: #1877F2; }
+        .btn-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .btn-x { background-color: #000; }
+        .btn-tiktok { background-color: #000; }
+        .fill-current { fill: currentColor; }
+
+        /* --- CONTADOR DE VISTAS --- */
+        .views-counter {
+            position: fixed; bottom: 20px; left: 20px; background: white;
+            padding: 8px 16px; border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex; align-items: center; gap: 10px; z-index: 50;
+            font-size: 0.9rem; color: #4b5563; border: 1px solid #e5e7eb;
+        }
+        .chart-bar { width: 4px; border-radius: 2px 2px 0 0; }
+        .bar-1 { height: 60%; background-color: var(--brand-blue); }
+        .bar-2 { height: 100%; background-color: var(--brand-yellow); }
+        .bar-3 { height: 80%; background-color: var(--brand-red); }
+
+        /* --- STYLES NUEVOS --- */
+        .ally-card {
+            border: 1px solid #e5e7eb;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .ally-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+        }
+        .ally-logo-container {
+            width: 100%;
+            height: 300px; /* Tamaño fijo para la imagen del logo/referencia */
+            overflow: hidden;
+            background-color: var(--brand-gray); /* Se puede cambiar a 'bg-white' en Tailwind */
+        }
+        /* CLASE CORREGIDA: Usa object-contain para asegurar que la imagen se vea completa */
+        .ally-logo-img {
+            object-fit: contain; /* ESCALA la imagen para que encaje, SIN CORTAR */
+            padding: 2rem; /* REDUCIMOS el padding para que el logo ocupe más espacio visible si es necesario */
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-white text-lg">
+
+    <!-- Contador de Vistas --><div class="views-counter">
+        <div class="flex items-end gap-[2px] h-4">
+            <div class="chart-bar bar-1"></div>
+            <div class="chart-bar bar-2"></div>
+            <div class="chart-bar bar-3"></div>
+        </div>
+        <span class="font-bold" id="page-views-count">6650 vistas</span>
+    </div>
+
+    <!-- Redes Flotantes --><div class="social-float hidden md:flex">
+        <a href="https://www.instagram.com/jjuscategui/" class="social-btn btn-instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com/jjUscategui" class="social-btn btn-x flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 512 512" class="fill-current"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
+        </a>
+        <a href="#" class="social-btn btn-facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://api.whatsapp.com/send/?phone=573118678830" class="social-btn btn-whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="" class="social-btn btn-tiktok"><i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <!-- 1. Header --><header class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="h-2 w-full flex">
+            <div class="bg-brand-yellow w-1/2"></div>
+            <div class="bg-brand-blue w-1/4"></div>
+            <div class="bg-brand-red w-1/4"></div>
+        </div>
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+                <div class="flex items-center justify-between w-full lg:w-auto gap-8">
+                    <a href="#" class="flex items-center border-r-4 border-gray-300 pr-6">
+                        <img src="https://uscateguicol.com/wp-content/uploads/2024/06/cropped-uscategui_logo.png" 
+                             onerror="this.src='https://placehold.co/200x50?text=LOGO+USCATEGUI'; this.onerror=null;"
+                             alt="Logo Uscátegui" class="h-12">
+                    </a>
+                    <button id="mobile-menu-btn" class="lg:hidden text-brand-blue text-3xl focus:outline-none"><i class="fas fa-bars"></i></button>
+                </div>
+                <nav id="main-nav" class="hidden lg:flex flex-col lg:flex-row items-center gap-4 lg:gap-8 text-base font-bold text-gray-600 uppercase tracking-wide w-full lg:w-auto mt-4 lg:mt-0">
+                    <a href="home.html" class="hover:text-brand-blue transition">Inicio</a>
+                    <a href="videos.html" class="hover:text-brand-blue transition">Videos</a>
+                    <a href="avances.html" class="hover:text-brand-blue transition">Seguridad</a>
+                    <!-- Link Activo --><a href="#" class="text-brand-blue border-b-4 border-brand-yellow pb-1">Aliados</a>
+                    <a href="noticias.html" class="hover:text-brand-blue transition">Noticias</a>
+                    <a href="unete.html" class="px-6 py-3 bg-brand-blue text-white rounded hover:bg-opacity-90 transition shadow-lg transform hover:-translate-y-0.5 text-base w-full lg:w-auto text-center lg:text-left">Únete al equipo</a>
+                </nav>
+                <div class="hidden xl:block pl-6 border-l-4 border-gray-200">
+                    <a href="#" class="flex items-center">
+                        <img src="https://uscateguicol.com/wp-content/uploads/elementor/thumbs/IMG_1243-r97qb41sgpgd2vp0sn8jy55nhca1g44kflp0otnhwo.jpg" 
+                             onerror="this.src='https://placehold.co/200x50?text=CONCEJO'; this.onerror=null;"
+                             alt="Logo Julián Uscátegui Concejal" class="h-12">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section: Aliados --><section class="relative h-[400px] flex items-center justify-center text-center text-white">
+        <!-- Imagen de fondo inspirada en image_839dff.jpg --><div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://uscateguicol.com/wp-content/uploads/2024/06/fondo_colombia.jpg');">
+            <!-- Overlay oscuro para legibilidad -->
+            <div class="absolute inset-0 bg-gray-900/70 mix-blend-multiply"></div>
+        </div>
+        <div class="relative z-10 container mx-auto px-6 animate-fade-in-up">
+            <h1 class="text-4xl md:text-5xl font-black font-heading mb-6 uppercase drop-shadow-lg leading-tight">
+                Fundaciones <br/><span class="text-brand-yellow">Aliadas</span>
+            </h1>
+            <div class="w-24 h-1 bg-brand-red mx-auto mb-8 shadow-lg"></div>
+            <p class="text-xl font-light text-gray-100 max-w-3xl mx-auto drop-shadow-md leading-relaxed">
+                Trabajamos de la mano con organizaciones comprometidas con el bienestar de nuestra fuerza pública, la seguridad y el desarrollo social.
+            </p>
+        </div>
+    </section>
+    
+    <div class="container mx-auto px-6 pt-20">
+        <h2 class="text-4xl font-black font-heading text-brand-blue text-center mb-16">Nuestras Alianzas Estratégicas</h2>
+    </div>
+
+    <!-- 3. Sección: Aliado 1 (ONG Hijos de los Héroes) - Logo a la izquierda --><section class="py-12 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="ally-card lg:flex rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl">
+                
+                <!-- Logo/Imagen a la Izquierda --><div class="w-full lg:w-2/5 ally-logo-container bg-white flex items-center justify-center">
+                    <!-- URL para Logo "Hijos de los Héroes" --><img src="https://uscateguicol.com/wp-content/uploads/2024/06/ong.jpg" 
+                         onerror="this.src='https://placehold.co/800x600/FFFFFF/CE1126?text=HIJOS+DE+LOS+HÉROES+COL'; this.onerror=null;"
+                         alt="Logo ONG Hijos de los Héroes" class="ally-logo-img">
+                </div>
+
+                <!-- Contenido a la Derecha --><div class="w-full lg:w-3/5 p-8 md:p-12 space-y-6 flex flex-col justify-center">
+                    <h3 class="text-3xl font-black font-heading text-brand-red">ONG Hijos de los Héroes Col</h3>
+                    <div class="w-20 h-1 bg-brand-yellow"></div>
+                    
+                    <h4 class="text-xl font-bold text-gray-700">ONG compuesta por Hijos de Militares y Policías</h4>
+                    
+                    <p class="text-gray-600 text-lg leading-relaxed">
+                        Trabajamos por los miembros de la Fuerza Pública activos, en retiro y sus familias. Nuestro enfoque se centra en tres pilares fundamentales que promueven la justicia, la memoria y la participación cívica:
+                    </p>
+                    
+                    <ul class="space-y-2 text-brand-blue font-semibold">
+                        <li class="flex items-center gap-2"><i class="fas fa-gavel text-brand-red"></i> Litigio Estratégico</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-book-open text-brand-red"></i> Reconstrucción de la Memoria Histórica</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-bullhorn text-brand-red"></i> Activismo y Vocería Cívica</li>
+                    </ul>
+
+                    <div class="pt-4">
+                        <a href="https://www.hijosdelosheroescol.com/" class="inline-flex items-center gap-3 bg-brand-blue text-white px-6 py-2 rounded-lg font-bold hover:bg-brand-red transition shadow-md">
+                            Visitar sitio web <i class="fas fa-external-link-alt text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Llamado a la Acción (CTA) Intermedio -->
+    <section class="py-16 bg-gray-50 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-64 h-64 bg-brand-yellow rounded-full mix-blend-multiply filter blur-3xl opacity-10 transform -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-brand-red rounded-full mix-blend-multiply filter blur-3xl opacity-10 transform translate-x-1/2 translate-y-1/2"></div>
+
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-black font-heading text-brand-blue mb-6 uppercase">¿Quieres ser nuestro aliado?</h2>
+            <p class="text-xl text-gray-700 mb-10 max-w-2xl mx-auto font-light">
+                Juntos podemos construir una Bogotá más segura y con mayores oportunidades. ¡Únete a nuestra red de aliados!
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#" class="bg-brand-blue text-white px-8 py-4 rounded-lg font-bold hover:bg-brand-red transition shadow-xl uppercase tracking-wide">
+                    Contáctanos para Alianza
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Sección: Aliado 2 (FUNVIGIAS) - Logo a la derecha --><section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="ally-card lg:flex flex-row-reverse rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl">
+                
+                <!-- Logo/Imagen a la Derecha --><div class="w-full lg:w-2/5 ally-logo-container bg-white flex items-center justify-center">
+                    <!-- URL para Logo "FUNVIGIAS" --><img src="https://uscateguicol.com/wp-content/uploads/2024/06/funvigias-768x768.jpg" 
+                         onerror="this.src='https://uscateguicol.com/wp-content/uploads/2024/06/funvigias-768x768.jpg'; this.onerror=null;"
+                         alt="Logo FUNVIGIAS" class="ally-logo-img">
+                </div>
+
+                <!-- Contenido a la Izquierda --><div class="w-full lg:w-3/5 p-8 md:p-12 space-y-6 flex flex-col justify-center">
+                    <h3 class="text-3xl font-black font-heading text-brand-blue">FUNVIGIAS</h3>
+                    <div class="w-20 h-1 bg-brand-yellow"></div>
+                    
+                    <h4 class="text-xl font-bold text-gray-700">Fundación Vigilantes y Guardas de Seguridad</h4>
+                    
+                    <p class="text-gray-600 text-lg leading-relaxed">
+                        Somos una entidad sin ánimo de lucro enfocada en el **DESARROLLO SOCIAL** de los vigilantes, guardas de seguridad y sus familias. Nuestro compromiso es promover su bienestar a través de pilares esenciales:
+                    </p>
+                    
+                    <ul class="space-y-2 text-brand-blue font-semibold">
+                        <li class="flex items-center gap-2"><i class="fas fa-graduation-cap text-brand-blue"></i> Educación</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-brain text-brand-blue"></i> Salud Mental</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-balance-scale text-brand-blue"></i> Asesoría Jurídica</li>
+                    </ul>
+
+                    <div class="pt-4">
+                        <a href="https://www.instagram.com/funvigias/" class="inline-flex items-center gap-3 bg-brand-red text-white px-6 py-2 rounded-lg font-bold hover:bg-brand-blue transition shadow-md">
+                            Conocer más de FUNVIGIAS <i class="fas fa-external-link-alt text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Llamado a la Acción (CTA) Final (reemplazado por el footer) -->
+    <!-- Mantenemos el Footer como última sección principal -->
+    <footer class="bg-brand-blue text-white pt-24 pb-12 border-t-[12px] border-brand-yellow">
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-16 mb-16">
+            <div class="md:col-span-1 space-y-8">
+                <div class="bg-white p-6 rounded-lg inline-block shadow-lg">
+                    <a href="#" class="flex items-center border-r-4 border-gray-300 pr-6">
+                        <img src="https://uscateguicol.com/wp-content/uploads/2024/06/cropped-uscategui_logo.png" 
+                             onerror="this.src='https://placehold.co/200x50?text=LOGO+USCATEGUI'; this.onerror=null;"
+                             alt="Logo Uscátegui" class="h-12">
+                    </a>
+                </div>
+                <div class="bg-white p-6 rounded-lg inline-block shadow-lg">
+                     <a href="#" class="flex items-center">
+                        <img src="https://uscateguicol.com/wp-content/uploads/elementor/thumbs/IMG_1243-r97qb41sgpgd2vp0sn8jy55nhca1g44kflp0otnhwo.jpg" alt="Logo Julián Uscátegui Concejal" class="h-12">
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-xl mb-8 uppercase tracking-wider text-brand-yellow border-b border-blue-800 pb-2 inline-block">Navegación</h4>
+                <ul class="space-y-4 text-base text-gray-300">
+                    <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-brand-yellow"></i> Inicio</a></li>
+                    <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-brand-yellow"></i> Noticias</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-xl mb-8 uppercase tracking-wider text-brand-yellow border-b border-blue-800 pb-2 inline-block">Contacto</h4>
+                <div class="text-base text-gray-300 space-y-6">
+                    <p class="flex items-start gap-3"><i class="fas fa-map-marker-alt mt-1 text-brand-yellow"></i> Concejo de Bogotá D.C.</p>
+                    <p class="font-bold text-white text-xl flex items-center gap-3"><i class="fas fa-phone text-brand-yellow"></i> +57 311 867 8830</p>
+                    <p><a href="mailto:info@uscateguicol.com" class="hover:text-brand-yellow flex items-center gap-3"><i class="fas fa-envelope text-brand-yellow"></i> info@uscateguicol.com</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 pt-10 border-t border-blue-900 text-center text-sm text-gray-400 font-light">
+            &copy; 2024 Equipo de la Seguridad. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script>
+        // Menú Móvil
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mainNav = document.getElementById('main-nav');
+        if (menuBtn && mainNav) {
+            menuBtn.addEventListener('click', () => {
+                mainNav.classList.toggle('hidden');
+                mainNav.classList.toggle('flex');
+            });
+        }
+    </script>
+</body>
+</html>

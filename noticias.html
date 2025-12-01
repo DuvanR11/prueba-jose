@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias - Julián Uscátegui</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CONFIGURACIÓN GLOBAL (Heredada) --- */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
+            overflow-x: hidden;
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+        }
+        h1, h2, h3, h4, h5, .font-heading { font-family: 'Montserrat', sans-serif; }
+
+        /* --- PALETA DE COLORES --- */
+        :root {
+            --brand-blue: #1F2A44;
+            --brand-yellow: #FFC72C;
+            --brand-red: #CE1126;
+            --brand-gray: #F4F6F8;
+        }
+
+        .bg-brand-blue { background-color: var(--brand-blue); }
+        .text-brand-blue { color: var(--brand-blue); }
+        .bg-brand-yellow { background-color: var(--brand-yellow); }
+        .text-brand-yellow { color: var(--brand-yellow); }
+        .bg-brand-red { background-color: var(--brand-red); }
+        .text-brand-red { color: var(--brand-red); }
+
+        /* --- REDES FLOTANTES --- */
+        .social-float {
+            position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 10px; z-index: 50;
+        }
+        .social-btn {
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.4rem; box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .social-btn:hover { transform: scale(1.1); }
+        .btn-whatsapp { background-color: #25D366; }
+        .btn-facebook { background-color: #1877F2; }
+        .btn-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .btn-x { background-color: #000; }
+        .btn-tiktok { background-color: #000; }
+        .fill-current { fill: currentColor; }
+
+        /* --- CONTADOR DE VISTAS --- */
+        .views-counter {
+            position: fixed; bottom: 20px; left: 20px; background: white;
+            padding: 8px 16px; border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex; align-items: center; gap: 10px; z-index: 50;
+            font-size: 0.9rem; color: #4b5563; border: 1px solid #e5e7eb;
+        }
+        .chart-bar { width: 4px; border-radius: 2px 2px 0 0; }
+        .bar-1 { height: 60%; background-color: var(--brand-blue); }
+        .bar-2 { height: 100%; background-color: var(--brand-yellow); }
+        .bar-3 { height: 80%; background-color: var(--brand-red); }
+
+        /* --- STYLES NUEVOS para NOTICIAS --- */
+        .article-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--brand-gray);
+        }
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .article-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="bg-white text-lg">
+
+    <!-- Contador de Vistas --><div class="views-counter">
+        <div class="flex items-end gap-[2px] h-4">
+            <div class="chart-bar bar-1"></div>
+            <div class="chart-bar bar-2"></div>
+            <div class="chart-bar bar-3"></div>
+        </div>
+        <span class="font-bold" id="page-views-count">9421 vistas</span>
+    </div>
+
+    <!-- Redes Flotantes --><div class="social-float hidden md:flex">
+        <a href="https://www.instagram.com/jjuscategui/" class="social-btn btn-instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com/jjUscategui" class="social-btn btn-x flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 512 512" class="fill-current"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
+        </a>
+        <a href="#" class="social-btn btn-facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://api.whatsapp.com/send/?phone=573118678830" class="social-btn btn-whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="" class="social-btn btn-tiktok"><i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <!-- 1. Header --><header class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="h-2 w-full flex">
+            <div class="bg-brand-yellow w-1/2"></div>
+            <div class="bg-brand-blue w-1/4"></div>
+            <div class="bg-brand-red w-1/4"></div>
+        </div>
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+                <div class="flex items-center justify-between w-full lg:w-auto gap-8">
+                    <a href="#" class="flex items-center border-r-4 border-gray-300 pr-6">
+                        <img src="https://uscateguicol.com/wp-content/uploads/2024/06/cropped-uscategui_logo.png" 
+                             onerror="this.src='https://placehold.co/200x50?text=LOGO+USCATEGUI'; this.onerror=null;"
+                             alt="Logo Uscátegui" class="h-12">
+                    </a>
+                    <button id="mobile-menu-btn" class="lg:hidden text-brand-blue text-3xl focus:outline-none"><i class="fas fa-bars"></i></button>
+                </div>
+                <nav id="main-nav" class="hidden lg:flex flex-col lg:flex-row items-center gap-4 lg:gap-8 text-base font-bold text-gray-600 uppercase tracking-wide w-full lg:w-auto mt-4 lg:mt-0">
+                    <a href="home.html" class="hover:text-brand-blue transition">Inicio</a>
+                    <a href="videos.html" class="hover:text-brand-blue transition">Videos</a>
+                    <a href="avances.html" class="hover:text-brand-blue transition">Seguridad</a>
+                    <a href="aliados.html" class="hover:text-brand-blue transition">Aliados</a>
+                    <!-- Link Activo -->
+                    <a href="noticias.html" class="text-brand-blue border-b-4 border-brand-yellow pb-1">Noticias</a>
+                    <a href="unete.html" class="px-6 py-3 bg-brand-blue text-white rounded hover:bg-opacity-90 transition shadow-lg transform hover:-translate-y-0.5 text-base w-full lg:w-auto text-center lg:text-left">Únete al equipo</a>
+                </nav>
+                <div class="hidden xl:block pl-6 border-l-4 border-gray-200">
+                    <a href="#" class="flex items-center">
+                        <img src="https://uscateguicol.com/wp-content/uploads/elementor/thumbs/IMG_1243-r97qb41sgpgd2vp0sn8jy55nhca1g44kflp0otnhwo.jpg" 
+                             onerror="this.src='https://placehold.co/200x50?text=CONCEJO'; this.onerror=null;"
+                             alt="Logo Julián Uscátegui Concejal" class="h-12">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section: Noticias -->
+    <section class="relative h-[400px] flex items-center justify-center text-center text-white">
+        <!-- Imagen de fondo inspirada en image_94dc5e.jpg (Discurso) -->
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://uscateguicol.com/wp-content/uploads/2024/06/fondo_colombia.jpg');">
+            <!-- Overlay oscuro para legibilidad -->
+            <div class="absolute inset-0 bg-gray-900/70 mix-blend-multiply"></div>
+        </div>
+        <div class="relative z-10 container mx-auto px-6 animate-fade-in-up">
+            <h1 class="text-4xl md:text-5xl font-black font-heading mb-6 uppercase drop-shadow-lg leading-tight">
+                Noticias y <br/><span class="text-brand-yellow">Comunicados</span>
+            </h1>
+            <div class="w-24 h-1 bg-brand-red mx-auto mb-8 shadow-lg"></div>
+            <p class="text-xl font-light text-gray-100 max-w-3xl mx-auto drop-shadow-md leading-relaxed">
+                Mantente informado sobre las intervenciones en el Concejo, los debates y los Seguridad para Bogotá.
+            </p>
+        </div>
+    </section>
+
+    <!-- 3. Sección: Artículos Destacados (Grid de Noticias) -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-black font-heading text-brand-blue text-center mb-16">Últimas Publicaciones</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                
+                <!-- Noticia 1: Propiedad Horizontal -->
+                <article class="article-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <img src="https://uscateguicol.com/wp-content/uploads/2024/06/image_94dbdb.jpg" 
+                         onerror="this.src='https://placehold.co/400x200/1F2A44/FFFFFF?text=Propiedad+Horizontal'; this.onerror=null;"
+                         alt="Noticia Propiedad Horizontal" class="w-full">
+                    <div class="p-6">
+                        <span class="text-sm font-semibold text-brand-red uppercase tracking-widest mb-2 block">Seguridad</span>
+                        <h3 class="text-xl font-extrabold text-brand-blue mb-3 font-heading leading-snug">
+                            Garantizando la protección y armonía en la Propiedad Horizontal
+                        </h3>
+                        <p class="text-gray-600 text-base mb-4 line-clamp-3">
+                            Abordamos el concepto de propiedad horizontal para garantizar la seguridad de unidades individuales y áreas comunes. Clave para un entorno seguro y tranquilo en Bogotá.
+                        </p>
+                        <a href="#" class="inline-flex items-center text-brand-red font-bold text-sm uppercase hover:text-brand-blue transition">
+                            Leer más <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Noticia 2: Salud Mental -->
+                <article class="article-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <img src="https://uscateguicol.com/wp-content/uploads/2024/06/image_94cd55.jpg" 
+                         onerror="this.src='https://placehold.co/400x200/FFC72C/1F2A44?text=Salud+Mental'; this.onerror=null;"
+                         alt="Noticia Salud Mental" class="w-full">
+                    <div class="p-6">
+                        <span class="text-sm font-semibold text-brand-blue uppercase tracking-widest mb-2 block">Salud Pública</span>
+                        <h3 class="text-xl font-extrabold text-brand-blue mb-3 font-heading leading-snug">
+                            Priorizando la salud mental en nuestro país desde la seguridad ciudadana
+                        </h3>
+                        <p class="text-gray-600 text-base mb-4 line-clamp-3">
+                            La salud mental es un componente integral de la seguridad ciudadana. Trabajamos en colaboración para atender las necesidades emocionales y psicológicas de la población.
+                        </p>
+                        <a href="#" class="inline-flex items-center text-brand-red font-bold text-sm uppercase hover:text-brand-blue transition">
+                            Leer más <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Noticia 3: Avances de Seguridad General -->
+                <article class="article-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <img src="https://uscateguicol.com/wp-content/uploads/2024/06/image_94cd52.jpg" 
+                         onerror="this.src='https://placehold.co/400x200/CE1126/FFFFFF?text=Seguridad+General'; this.onerror=null;"
+                         alt="Noticia Seguridad General" class="w-full">
+                    <div class="p-6">
+                        <span class="text-sm font-semibold text-brand-yellow uppercase tracking-widest mb-2 block">Intervenciones</span>
+                        <h3 class="text-xl font-extrabold text-brand-blue mb-3 font-heading leading-snug">
+                            Logros y avances garantizando la seguridad en el país
+                        </h3>
+                        <p class="text-gray-600 text-base mb-4 line-clamp-3">
+                            Hemos trabajado para crear un entorno seguro y protegido, promoviendo el bienestar general y previniendo delitos con medidas proactivas y colaboración interinstitucional.
+                        </p>
+                        <a href="#" class="inline-flex items-center text-brand-red font-bold text-sm uppercase hover:text-brand-blue transition">
+                            Leer más <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+                
+            </div>
+
+            <!-- Botón de Cargar Más -->
+            <div class="text-center mt-12">
+                <button class="bg-brand-red text-white px-8 py-3 rounded-lg font-bold hover:bg-brand-blue transition shadow-lg uppercase tracking-wide transform hover:scale-105">
+                    Ver más noticias <i class="fas fa-redo-alt ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 4. Sección: Feed de X (Twitter) - Usando IFRAMEs oficiales -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-black font-heading text-brand-blue text-center mb-16 flex items-center justify-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 512 512" class="fill-current text-black"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
+                Últimas de nuestras redes (Feeds de X)
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                
+                <!-- Columna 1: Perfil de Jose Jaime Uscátegui -->
+                <div class="bg-white rounded-xl shadow-xl p-4 border-t-4 border-brand-red h-[600px] overflow-hidden">
+                    <h3 class="text-xl font-bold text-brand-blue mb-4">Feed de Jose Jaime Uscátegui</h3>
+                    <!-- Iframe para el timeline de Jose Jaime Uscátegui (@jjuscategui) -->
+                    <!-- NOTA: El widget oficial de X podría no cargar debido a restricciones de sandbox/CORS. -->
+                    <iframe id="jose-jaime-feed"
+                            src="https://twitter.com/jjuscategui?ref_src=twsrc%5Etfw" 
+                            frameborder="0"
+                            width="100%"
+                            height="550"
+                            title="Timeline de Jose Jaime Uscátegui"
+                            class="rounded-lg border border-gray-200">
+                    </iframe>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <p class="text-xs text-gray-500 mt-2">Si el feed no carga, es posible que el entorno restrinja la carga de widgets externos.</p>
+                </div>
+
+                <!-- Columna 2: Perfil de Julián Uscátegui -->
+                <div class="bg-white rounded-xl shadow-xl p-4 border-t-4 border-brand-blue h-[600px] overflow-hidden">
+                    <h3 class="text-xl font-bold text-brand-blue mb-4">Feed de Julián Uscátegui</h3>
+                     <!-- Iframe para el timeline de Julián Uscátegui (@JuliUscategui) -->
+                    <iframe id="julian-feed"
+                            src="https://x.com/jjUscategui?s=20" 
+                            frameborder="0"
+                            width="100%"
+                            height="550"
+                            title="Timeline de Julián Uscátegui"
+                            class="rounded-lg border border-gray-200">
+                    </iframe>
+                    <p class="text-xs text-gray-500 mt-2">Si el feed no carga, es posible que el entorno restrinja la carga de widgets externos.</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-10">
+                <a href="https://x.com/jjUscategui" target="_blank" class="bg-black text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-700 transition shadow-lg uppercase tracking-wide transform hover:scale-105 inline-flex items-center gap-2">
+                    <i class="fab fa-twitter"></i>
+                    Ver todo el feed en X
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Sección: Suscripción (Llamativo) -->
+    <section class="py-20 bg-brand-blue relative overflow-hidden">
+        <!-- Efecto de patrón de circuito integrado para un toque tecnológico y de seguridad -->
+        <div class="absolute inset-0 opacity-10" style="background-image: url('https://placehold.co/1000x1000/1F2A44/344059?text=CIRCUIT'); background-size: 200px; transform: rotate(45deg);"></div>
+        
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl font-black font-heading text-brand-yellow mb-4 uppercase drop-shadow-lg">
+                ¡No te pierdas ni un detalle!
+            </h2>
+            <p class="text-xl text-gray-200 mb-10 max-w-3xl mx-auto font-light">
+                Recibe directamente en tu correo las noticias, intervenciones en el Concejo y avances del Equipo de la Seguridad.
+            </p>
+            
+            <div class="max-w-xl mx-auto flex flex-col sm:flex-row gap-4">
+                <input type="email" placeholder="Ingresa tu correo electrónico" class="flex-1 px-5 py-3 rounded-lg border-2 border-white focus:ring-4 focus:ring-brand-yellow focus:border-brand-yellow outline-none text-gray-900 shadow-xl" required>
+                <button class="bg-brand-red text-white px-8 py-3 rounded-lg font-bold hover:bg-brand-yellow hover:text-brand-blue transition shadow-xl uppercase tracking-wide transform hover:scale-105">
+                    Suscribirme <i class="fas fa-envelope-open-text ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Footer (Mantenido) -->
+    <footer class="bg-brand-blue text-white pt-24 pb-12 border-t-[12px] border-brand-yellow">
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-16 mb-16">
+            <div class="md:col-span-1 space-y-8">
+                <div class="bg-white p-6 rounded-lg inline-block shadow-lg">
+                    <a href="#" class="flex items-center border-r-4 border-gray-300 pr-6">
+                        <img src="https://uscateguicol.com/wp-content/uploads/2024/06/cropped-uscategui_logo.png" 
+                             onerror="this.src='https://placehold.co/200x50?text=LOGO+USCATEGUI'; this.onerror=null;"
+                             alt="Logo Uscátegui" class="h-12">
+                    </a>
+                </div>
+                <div class="bg-white p-6 rounded-lg inline-block shadow-lg">
+                     <a href="#" class="flex items-center">
+                        <img src="https://uscateguicol.com/wp-content/uploads/elementor/thumbs/IMG_1243-r97qb41sgpgd2vp0sn8jy55nhca1g44kflp0otnhwo.jpg" alt="Logo Julián Uscátegui Concejal" class="h-12">
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-xl mb-8 uppercase tracking-wider text-brand-yellow border-b border-blue-800 pb-2 inline-block">Navegación</h4>
+                <ul class="space-y-4 text-base text-gray-300">
+                    <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-brand-yellow"></i> Inicio</a></li>
+                    <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-xs text-brand-yellow"></i> Noticias</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-xl mb-8 uppercase tracking-wider text-brand-yellow border-b border-blue-800 pb-2 inline-block">Contacto</h4>
+                <div class="text-base text-gray-300 space-y-6">
+                    <p class="flex items-start gap-3"><i class="fas fa-map-marker-alt mt-1 text-brand-yellow"></i> Concejo de Bogotá D.C.</p>
+                    <p class="font-bold text-white text-xl flex items-center gap-3"><i class="fas fa-phone text-brand-yellow"></i> +57 311 867 8830</p>
+                    <p><a href="mailto:info@uscateguicol.com" class="hover:text-brand-yellow flex items-center gap-3"><i class="fas fa-envelope text-brand-yellow"></i> info@uscateguicol.com</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 pt-10 border-t border-blue-900 text-center text-sm text-gray-400 font-light">
+            &copy; 2024 Equipo de la Seguridad. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script>
+        // Menú Móvil
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mainNav = document.getElementById('main-nav');
+        if (menuBtn && mainNav) {
+            menuBtn.addEventListener('click', () => {
+                mainNav.classList.toggle('hidden');
+                mainNav.classList.toggle('flex');
+            });
+        }
+    </script>
+</body>
+</html>
