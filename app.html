@@ -100,15 +100,17 @@
                     <a href="#" class="flex items-center border-r-4 border-gray-300 pr-6">
                         <img src="https://uscateguicol.com/wp-content/uploads/2024/06/cropped-uscategui_logo.png" alt="Logo Uscátegui" class="h-12">
                     </a>
-                    <button class="lg:hidden text-brand-blue text-3xl"><i class="fas fa-bars"></i></button>
+                    <!-- Añadimos ID al botón de menú móvil para JS -->
+                    <button id="mobile-menu-btn" class="lg:hidden text-brand-blue text-3xl"><i class="fas fa-bars"></i></button>
                 </div>
 
-                <nav class="hidden lg:flex items-center gap-8 text-base font-bold text-gray-600 uppercase tracking-wide">
+                <!-- Añadimos ID al menú y clases para su comportamiento móvil -->
+                <nav id="main-nav" class="hidden lg:flex flex-col lg:flex-row items-center gap-8 text-base font-bold text-gray-600 uppercase tracking-wide w-full lg:w-auto mt-4 lg:mt-0">
                     <a href="#inicio" class="text-brand-blue border-b-4 border-brand-yellow pb-1">Inicio</a>
                     <a href="#funciones" class="hover:text-brand-blue transition">Funciones</a>
                     <a href="#como-funciona" class="hover:text-brand-blue transition">Cómo Funciona</a>
                     <a href="#galeria" class="hover:text-brand-blue transition">Galería</a>
-                    <a href="#descargar" class="px-6 py-3 bg-brand-blue text-white rounded hover:bg-opacity-90 transition shadow-lg transform hover:-translate-y-0.5 text-base">
+                    <a href="#descargar" class="px-6 py-3 bg-brand-blue text-white rounded hover:bg-opacity-90 transition shadow-lg transform hover:-translate-y-0.5 text-base w-full lg:w-auto text-center lg:text-left">
                         Descargar App
                     </a>
                 </nav>
@@ -328,7 +330,9 @@
                 </div>
             </div>
 
+            <!-- Contenedor del Carrusel (Añadido ID para JS) -->
             <div id="galleryContainer" class="flex gap-6 overflow-x-auto pb-8 snap-x scrollbar-hide">
+                <!-- Se usan placeholders por la ausencia de las imágenes 'imgs/*' -->
                 <div class="min-w-[250px] md:min-w-[300px] snap-center">
                     <img src="imgs/login.jpg" class="rounded-[2rem] shadow-xl border-8 border-gray-800 w-full" alt="Pantalla Login">
                     <p class="text-center mt-4 font-semibold text-gray-600">Inicio Seguro</p>
@@ -404,15 +408,38 @@
     </footer>
 
     <script>
-        // Obtener los elementos del DOM usando los IDs
+        // --- Lógica del menú móvil ---
+        // Referencias a los elementos que tienen que existir en el HTML
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mainNav = document.getElementById('main-nav');
+        
+        if (menuBtn && mainNav) {
+            menuBtn.addEventListener('click', () => {
+                // Alterna la clase 'hidden' y 'flex' para mostrar/ocultar el menú
+                mainNav.classList.toggle('hidden');
+                mainNav.classList.toggle('flex');
+            });
+
+            // Lógica para cerrar el menú al hacer clic en un enlace (scroll a sección)
+            const navLinks = mainNav.querySelectorAll('a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    // Solo se aplica en vistas pequeñas cuando el menú está visible
+                    if (mainNav.classList.contains('flex') && window.innerWidth < 1024) { 
+                        mainNav.classList.add('hidden');
+                        mainNav.classList.remove('flex');
+                    }
+                });
+            });
+        }
+        
+        // --- Lógica del carrusel de galería ---
         const galleryContainer = document.getElementById('galleryContainer');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         
-        // Función para desplazar el carrusel
         function scrollGallery(direction) {
-            // Se usa 350px como desplazamiento para asegurar que el ancho de la tarjeta (~300px)
-            // más el espacio (gap) se cubran en un solo paso.
+            // Se usa 350px como desplazamiento
             const scrollAmount = 350; 
             
             if (galleryContainer) {
@@ -423,7 +450,6 @@
             }
         }
 
-        // Event Listeners para los botones
         if (prevBtn) {
             prevBtn.addEventListener('click', () => {
                 scrollGallery(-1); // Desplazar a la izquierda
@@ -436,5 +462,5 @@
             });
         }
     </script>
-    </body>
+</body>
 </html>
